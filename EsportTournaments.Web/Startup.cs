@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EsportTournaments.Data;
 using EsportTournaments.Data.Models;
+using EsportTournaments.Core.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EsportTournaments.Web
 {
@@ -23,15 +25,28 @@ namespace EsportTournaments.Web
             services.AddDbContext<EsportTournamentsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
                 .AddEntityFrameworkStores<EsportTournamentsDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            services.AddDomainService();
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+            });
         }
         
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseDatabaseMigration();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EsportTournaments.Core\EsportTournaments.Core.csproj" />
     <ProjectReference Include="..\EsportTournaments.Data\EsportTournaments.Data.csproj" />
   </ItemGroup>
 
