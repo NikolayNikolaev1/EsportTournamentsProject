@@ -12,3 +12,5 @@ C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Web\obj\Debug\n
 C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Web\obj\Debug\netcoreapp2.0\EsportTournaments.Web.AssemblyInfo.cs
 C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Web\obj\Debug\netcoreapp2.0\EsportTournaments.Web.dll
 C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Web\obj\Debug\netcoreapp2.0\EsportTournaments.Web.pdb
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Web\bin\Debug\netcoreapp2.0\EsportTournaments.Core.dll
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Web\bin\Debug\netcoreapp2.0\EsportTournaments.Core.pdb
