@@ -1,0 +1,9 @@
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\bin\Debug\netstandard2.0\EsportTournaments.Data.deps.json
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\bin\Debug\netstandard2.0\EsportTournaments.Data.dll
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\obj\Debug\netstandard2.0\EsportTournaments.Data.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\obj\Debug\netstandard2.0\EsportTournaments.Data.csproj.CoreCompileInputs.cache
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\obj\Debug\netstandard2.0\EsportTournaments.Data.AssemblyInfoInputs.cache
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\obj\Debug\netstandard2.0\EsportTournaments.Data.AssemblyInfo.cs
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\bin\Debug\netstandard2.0\EsportTournaments.Data.pdb
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\obj\Debug\netstandard2.0\EsportTournaments.Data.dll
+C:\Users\user\Desktop\EsportTournamentsProject\EsportTournaments.Data\obj\Debug\netstandard2.0\EsportTournaments.Data.pdb
