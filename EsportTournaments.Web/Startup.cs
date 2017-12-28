@@ -41,6 +41,7 @@ namespace EsportTournaments.Web
             services.AddAutoMapper();
 
             services.AddTransient<IAdminUserService, AdminUserService>();
+            services.AddTransient<IAdminGameService, AdminGameService>();
 
             services.AddDomainService();
 
