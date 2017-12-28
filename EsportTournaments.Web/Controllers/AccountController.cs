@@ -71,7 +71,7 @@ namespace EsportTournaments.Web.Controllers
                     return View(model);
                 }
             }
-            
+
             return View(model);
         }
 
@@ -215,7 +215,6 @@ namespace EsportTournaments.Web.Controllers
                     SteamAccount = model.SteamAccount,
                     BlizzardAccount = model.BlizzardAccount
                 };
-
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -229,7 +228,7 @@ namespace EsportTournaments.Web.Controllers
                 }
                 AddErrors(result);
             }
-            
+
             return View(model);
         }
 
@@ -266,7 +265,7 @@ namespace EsportTournaments.Web.Controllers
             {
                 return RedirectToAction(nameof(Login));
             }
-            
+
             var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
@@ -353,11 +352,10 @@ namespace EsportTournaments.Web.Controllers
                 {
                     return RedirectToAction(nameof(ForgotPasswordConfirmation));
                 }
-                
+
                 var code = await userManager.GeneratePasswordResetTokenAsync(user);
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
-            
+
             return View(model);
         }
 

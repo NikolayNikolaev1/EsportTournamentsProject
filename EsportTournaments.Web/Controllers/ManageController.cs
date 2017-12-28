@@ -20,7 +20,7 @@ namespace EsportTournaments.Web.Controllers
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly ILogger logger;
-        private readonly UrlEncoder urlEncoder;
+        private readonly UrlEncoder Encoder;
 
         private const string AuthenicatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
 
@@ -33,7 +33,7 @@ namespace EsportTournaments.Web.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.logger = logger;
-            this.urlEncoder = urlEncoder;
+            Encoder = urlEncoder;
         }
 
         [TempData]
@@ -52,7 +52,10 @@ namespace EsportTournaments.Web.Controllers
             {
                 Username = user.UserName,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
+                Country = user.Country,
+                LeagueOfLegendsAccount = user.LeagueOfLegendsAccount,
+                BlizzardAccount = user.BlizzardAccount,
+                SteamAccount = user.SteamAccount,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
@@ -85,14 +88,37 @@ namespace EsportTournaments.Web.Controllers
                 }
             }
 
-            var phoneNumber = user.PhoneNumber;
-            if (model.PhoneNumber != phoneNumber)
+            var countryIsChanged = model.Country != user.Country;
+            var lolAccIsChanged = model.LeagueOfLegendsAccount != user.LeagueOfLegendsAccount;
+            var steamAccIsChanged = model.SteamAccount != user.SteamAccount;
+            var blizzardAccIsChanged = model.BlizzardAccount != user.BlizzardAccount;
+
+            if (countryIsChanged)
             {
-                var setPhoneResult = await userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
-                }
+                user.Country = model.Country;
+            }
+
+            if (lolAccIsChanged)
+            {
+                user.LeagueOfLegendsAccount = model.LeagueOfLegendsAccount;
+            }
+
+            if (steamAccIsChanged)
+            {
+                user.SteamAccount = model.SteamAccount;
+            }
+
+            if (blizzardAccIsChanged)
+            {
+                user.BlizzardAccount = model.BlizzardAccount;
+            }
+
+            if (countryIsChanged
+                || lolAccIsChanged
+                || steamAccIsChanged
+                || blizzardAccIsChanged)
+            {
+                await this.userManager.UpdateAsync(user);
             }
 
             StatusMessage = "Your profile has been updated";
@@ -115,7 +141,6 @@ namespace EsportTournaments.Web.Controllers
             }
 
             var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            var email = user.Email;
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToAction(nameof(Index));
@@ -241,7 +266,7 @@ namespace EsportTournaments.Web.Controllers
         public async Task<IActionResult> LinkLogin(string provider)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-            
+
             var redirectUrl = Url.Action(nameof(LinkLoginCallback));
             var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl, userManager.GetUserId(User));
             return new ChallengeResult(provider, properties);
@@ -267,7 +292,7 @@ namespace EsportTournaments.Web.Controllers
             {
                 throw new ApplicationException($"Unexpected error occurred adding external login for user with ID '{user.Id}'.");
             }
-            
+
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             StatusMessage = "The external login was added.";
@@ -390,7 +415,7 @@ namespace EsportTournaments.Web.Controllers
             {
                 throw new ApplicationException($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
             }
-            
+
             var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
 
             var is2faTokenValid = await userManager.VerifyTwoFactorTokenAsync(
@@ -483,8 +508,8 @@ namespace EsportTournaments.Web.Controllers
         {
             return string.Format(
                 AuthenicatorUriFormat,
-                urlEncoder.Encode("EsportTournaments.Web"),
-                urlEncoder.Encode(email),
+                Encoder.Encode("EsportsTournaments.Web"),
+                Encoder.Encode(email),
                 unformattedKey);
         }
 
