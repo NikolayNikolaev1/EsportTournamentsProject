@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace EsportTournaments.Core.Extensions
 {
-    class ControllerExtensions
+    public static class ControllerExtensions
     {
+        public static IActionResult ViewOrNotFound(this Controller controller, object model)
+        {
+            if (model == null)
+            {
+                return controller.NotFound();
+            }
+
+            return controller.View(model);
+        }
     }
 }

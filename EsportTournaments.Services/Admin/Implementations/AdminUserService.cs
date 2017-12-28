@@ -1,5 +1,7 @@
-﻿using EsportTournaments.Data;
+﻿using AutoMapper.QueryableExtensions;
+using EsportTournaments.Data;
 using EsportTournaments.Services.Admin.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

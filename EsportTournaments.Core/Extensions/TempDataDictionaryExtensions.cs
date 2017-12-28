@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace EsportTournaments.Core.Extensions
 {
-    class TempDataDictionaryExtensions
+    public static class TempDataDictionaryExtensions
     {
+        public static void AddSuccessMessage(this ITempDataDictionary tempData, string message)
+        {
+            tempData[WebConstants.TempDataSuccessMessageKey] = message;
+        }
     }
 }

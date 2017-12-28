@@ -8,6 +8,9 @@ using EsportTournaments.Data;
 using EsportTournaments.Data.Models;
 using EsportTournaments.Core.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
+using EsportTournaments.Services.Admin;
+using EsportTournaments.Services.Admin.Implementations;
 
 namespace EsportTournaments.Web
 {
@@ -34,6 +37,10 @@ namespace EsportTournaments.Web
             })
                 .AddEntityFrameworkStores<EsportTournamentsDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAutoMapper();
+
+            services.AddTransient<IAdminUserService, AdminUserService>();
 
             services.AddDomainService();
 

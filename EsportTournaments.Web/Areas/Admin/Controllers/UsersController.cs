@@ -1,5 +1,7 @@
-﻿using EsportTournaments.Data.Models;
+﻿using EsportTournaments.Core.Extensions;
+using EsportTournaments.Data.Models;
 using EsportTournaments.Services.Admin;
+using EsportTournaments.Web.Areas.Admin.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

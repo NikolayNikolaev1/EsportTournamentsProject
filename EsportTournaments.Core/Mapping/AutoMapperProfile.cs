@@ -11,7 +11,7 @@ namespace EsportTournaments.Core.Mapping
             var allTypes = AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(a => a.GetName().Name.Contains("EsportsTournaments"))
+                .Where(a => a.GetName().Name.Contains("EsportTournaments"))
                 .SelectMany(a => a.GetTypes());
 
             allTypes

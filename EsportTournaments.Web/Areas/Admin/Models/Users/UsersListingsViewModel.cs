@@ -1,11 +1,13 @@
-﻿using System;
+﻿using EsportTournaments.Services.Admin.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EsportTournaments.Web.Areas.Admin.Models.Users
 {
     public class UsersListingsViewModel
     {
+        public IEnumerable<AdminUserListingServiceModel> Users { get; set; }
+
+        public IEnumerable<SelectListItem> Roles { get; set; }
     }
 }

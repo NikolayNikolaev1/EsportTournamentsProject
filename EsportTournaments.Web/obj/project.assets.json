@@ -5077,7 +5077,8 @@
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
-          "EsportTournaments.Data": "1.0.0"
+          "EsportTournaments.Data": "1.0.0",
+          "Microsoft.AspNetCore.Mvc": "2.0.1"
         },
         "compile": {
           "bin/placeholder/EsportTournaments.Core.dll": {}
@@ -13243,6 +13244,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
+      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 3.2.0",
       "EsportTournaments.Core >= 1.0.0",
       "EsportTournaments.Data >= 1.0.0",
       "EsportTournaments.Services >= 1.0.0",
@@ -13306,6 +13308,10 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+            "target": "Package",
+            "version": "[3.2.0, )"
+          },
           "Microsoft.AspNetCore.All": {
             "target": "Package",
             "version": "[2.0.3, )"

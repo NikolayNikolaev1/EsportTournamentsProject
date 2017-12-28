@@ -7,6 +7,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
@@ -22,11 +23,6 @@
     <ProjectReference Include="..\EsportTournaments.Core\EsportTournaments.Core.csproj" />
     <ProjectReference Include="..\EsportTournaments.Data\EsportTournaments.Data.csproj" />
     <ProjectReference Include="..\EsportTournaments.Services\EsportTournaments.Services.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
 
 </Project>
