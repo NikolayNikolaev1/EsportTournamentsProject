@@ -3,13 +3,12 @@
     ViewData["Title"] = $"{Model.Username}'s Profile";
 }
 <h2>@ViewData["Title"]</h2>
-<h3>@Model.Username</h3>
 
 @if (Model.Username == User.Identity.Name)
 {
     <a asp-controller="Manage" asp-action="Index" class="btn btn-default">Edit Profile</a>
 }
-
+<hr />
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
