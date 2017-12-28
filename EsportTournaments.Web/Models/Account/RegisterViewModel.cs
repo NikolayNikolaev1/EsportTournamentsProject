@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using static EsportTournaments.Data.DataConstants;
 
-namespace EsportTournaments.Web.Models.AccountViewModels
+namespace EsportTournaments.Web.Models.Account
 {
     public class RegisterViewModel
     {

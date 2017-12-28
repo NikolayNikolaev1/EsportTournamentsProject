@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using EsportTournaments.Web.Models.AccountViewModels;
+using EsportTournaments.Web.Models.Account;
 using EsportTournaments.Data.Models;
 
 namespace EsportTournaments.Web.Controllers

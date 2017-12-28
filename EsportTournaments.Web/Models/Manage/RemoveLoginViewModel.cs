@@ -1,4 +1,4 @@
-﻿namespace EsportTournaments.Web.Models.ManageViewModels
+﻿namespace EsportTournaments.Web.Models.Manage
 {
     public class RemoveLoginViewModel
     {

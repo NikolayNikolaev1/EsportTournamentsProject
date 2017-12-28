@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace EsportTournaments.Web.Models.ManageViewModels
+namespace EsportTournaments.Web.Models.Manage
 {
     public class EnableAuthenticatorViewModel
     {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 
-namespace EsportTournaments.Web.Models.ManageViewModels
+namespace EsportTournaments.Web.Models.Manage
 {
     public class ExternalLoginsViewModel
     {

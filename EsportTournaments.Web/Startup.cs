@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using EsportTournaments.Services.Admin;
 using EsportTournaments.Services.Admin.Implementations;
+using EsportTournaments.Services;
+using EsportTournaments.Services.Implementations;
 
 namespace EsportTournaments.Web
 {
@@ -42,6 +44,7 @@ namespace EsportTournaments.Web
 
             services.AddTransient<IAdminUserService, AdminUserService>();
             services.AddTransient<IAdminGameService, AdminGameService>();
+            services.AddTransient<IGameService, GameService>();
 
             services.AddDomainService();
 

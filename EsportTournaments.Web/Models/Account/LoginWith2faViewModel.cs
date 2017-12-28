@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace EsportTournaments.Web.Models.AccountViewModels
+namespace EsportTournaments.Web.Models.Account
 {
     public class LoginWith2faViewModel
     {
