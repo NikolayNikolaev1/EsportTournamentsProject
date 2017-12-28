@@ -206,7 +206,16 @@ namespace EsportTournaments.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User
+                {
+                    UserName = model.Username,
+                    Email = model.Email,
+                    Country = model.Country,
+                    LeagueOfLegendsAccount = model.LeagueOfLegendsAccount,
+                    SteamAccount = model.SteamAccount,
+                    BlizzardAccount = model.BlizzardAccount
+                };
+
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
