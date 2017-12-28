@@ -1,0 +1,38 @@
+﻿@model TeamListingViewModel
+@{
+    ViewData["Title"] = "Teams";
+}
+<h2>@ViewData["Title"]</h2>
+
+<ul class="list-group" align="center">
+    @foreach (var teams in Model.Teams)
+    {
+        <li class="list-group-item">
+            <img src="@teams.TeamImageUrl" style="width:250px;height:160px;" />
+            <a asp-action="Details" asp-route-id="@teams.Id">
+                <h1>
+                    @teams.Name
+                </h1>
+            </a>
+            <small>@teams.Game</small>
+            <br />
+        </li>
+    }
+</ul>
+@if (Model.TotalTournaments >= Model.Teams.Count())
+{
+    <ul class="pagination">
+        <li class="@(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
+            <a asp-route-page="@Model.PreviousPage"
+               aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : string.Empty)">
+            <a asp-route-page="@Model.NextPage"
+               aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+}

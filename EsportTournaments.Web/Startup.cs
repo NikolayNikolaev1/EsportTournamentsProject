@@ -48,6 +48,7 @@ namespace EsportTournaments.Web
             services.AddTransient<IAdminGameService, AdminGameService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IGameService, GameService>();
+            services.AddTransient<ITeamService, TeamService>();
             services.AddTransient<ITournamentService, TournamentService>();
             services.AddTransient<IModeratorTournamentService, ModeratorTournamentService>();
 
