@@ -5099,6 +5099,22 @@
         "runtime": {
           "bin/placeholder/EsportTournaments.Data.dll": {}
         }
+      },
+      "EsportTournaments.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "3.2.0",
+          "EsportTournaments.Core": "1.0.0",
+          "EsportTournaments.Data": "1.0.0",
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.0.1"
+        },
+        "compile": {
+          "bin/placeholder/EsportTournaments.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EsportTournaments.Services.dll": {}
+        }
       }
     }
   },
@@ -13218,12 +13234,18 @@
       "type": "project",
       "path": "../EsportTournaments.Data/EsportTournaments.Data.csproj",
       "msbuildProject": "../EsportTournaments.Data/EsportTournaments.Data.csproj"
+    },
+    "EsportTournaments.Services/1.0.0": {
+      "type": "project",
+      "path": "../EsportTournaments.Services/EsportTournaments.Services.csproj",
+      "msbuildProject": "../EsportTournaments.Services/EsportTournaments.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "EsportTournaments.Core >= 1.0.0",
       "EsportTournaments.Data >= 1.0.0",
+      "EsportTournaments.Services >= 1.0.0",
       "Microsoft.AspNetCore.All >= 2.0.3",
       "Microsoft.EntityFrameworkCore.Tools >= 2.0.1",
       "Microsoft.NETCore.App >= 2.0.0",
@@ -13268,6 +13290,9 @@
             },
             "C:\\Users\\user\\Desktop\\EsportTournamentsProject\\EsportTournaments.Data\\EsportTournaments.Data.csproj": {
               "projectPath": "C:\\Users\\user\\Desktop\\EsportTournamentsProject\\EsportTournaments.Data\\EsportTournaments.Data.csproj"
+            },
+            "C:\\Users\\user\\Desktop\\EsportTournamentsProject\\EsportTournaments.Services\\EsportTournaments.Services.csproj": {
+              "projectPath": "C:\\Users\\user\\Desktop\\EsportTournamentsProject\\EsportTournaments.Services\\EsportTournaments.Services.csproj"
             }
           }
         }
