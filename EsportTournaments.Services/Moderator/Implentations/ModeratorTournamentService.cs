@@ -2,7 +2,6 @@
 using EsportTournaments.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace EsportTournaments.Services.Moderator.Implentations
@@ -15,9 +14,6 @@ namespace EsportTournaments.Services.Moderator.Implentations
         {
             this.db = db;
         }
-
-        public async Task<IEnumerable<Game>> GetAllGamesForTournamentAsync()
-            => await this.db.Games.ToListAsync();
 
         public async Task CreateAsync(string name, PrizeType prize, DateTime startDate, string gameId)
         {

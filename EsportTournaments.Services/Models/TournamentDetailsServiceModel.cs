@@ -1,0 +1,33 @@
+﻿using AutoMapper;
+using EsportTournaments.Core.Mapping;
+using EsportTournaments.Data.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace EsportTournaments.Services.Models
+{
+    public class TournamentDetailsServiceModel : IMapFrom<Tournament>, IMapFrom<Team>, IMapFrom<TeamTournament>, IHaveCustomMapping
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public PrizeType Prize { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public string Game { get; set; }
+
+        public string GameImage { get; set; }
+
+        public IEnumerable<string> Teams { get; set; }
+
+        public void ConfigureMapping(Profile mapper)
+            => mapper
+                    .CreateMap<Tournament, TournamentDetailsServiceModel>()
+                    .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name))
+                    .ForMember(t => t.GameImage, cfg => cfg.MapFrom(t => t.Game.GameImageUrl))
+                    .ForMember(t => t.Teams, cfg => cfg.MapFrom(t => t.Teams.Select(teams => teams.Team.Name)));
+    }
+}

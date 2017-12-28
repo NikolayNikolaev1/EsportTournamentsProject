@@ -1,0 +1,42 @@
+﻿@model TournamentsDetailsViewModel
+
+@{
+    ViewData["Title"] = Model.Tournament.Name;
+}
+
+<h2 class="text-center">@ViewData["Title"]</h2>
+<img src="@Model.Tournament.GameImage" style="width:1150px;height:360px;" />
+
+<table class="table table-bordered table-hover">
+
+    <thead>
+        <tr>
+            <th>
+                <h1>Teams Registered For Tournament</h1>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model.Tournament.Teams)
+        {
+            <tr>
+                <td>
+                    <h2>@team</h2>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <hr />
+            <a class="btn btn-primary btn-block" asp-area="" asp-controller="Tournaments" asp-route-id="@Model.Tournament.Id" asp-action="Join">Join</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

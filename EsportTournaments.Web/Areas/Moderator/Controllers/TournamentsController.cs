@@ -1,4 +1,5 @@
 ﻿using EsportTournaments.Core.Extensions;
+using EsportTournaments.Services;
 using EsportTournaments.Services.Moderator;
 using EsportTournaments.Web.Areas.Moderator.Models.Tournaments;
 using Microsoft.AspNetCore.Authorization;
@@ -16,17 +17,19 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
     public class TournamentsController : Controller
     {
         private readonly IModeratorTournamentService tournaments;
+        private readonly IGameService games;
 
-        public TournamentsController(IModeratorTournamentService tournaments)
+        public TournamentsController(IModeratorTournamentService tournaments, IGameService games)
         {
             this.tournaments = tournaments;
+            this.games = games;
         }
 
         public async Task<IActionResult> Create()
         {
             var games = await this
-                .tournaments
-                .GetAllGamesForTournamentAsync();
+                .games
+                .GetAllGamesAsync();
 
             var gamesListItems = games
                 .Select(g => new SelectListItem
@@ -64,7 +67,12 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                 model.StartDate,
                 model.GameId.ToString());
 
-            return this.View();//RedirectToAction(nameof(Web.Controllers.TournamentsController.Index), "Tournaments", new { area = string.Empty });
+            return this.RedirectToAction(
+                nameof(Web
+                    .Controllers
+                    .TournamentsController
+                    .Index),
+                "Tournaments", new { area = string.Empty });
         }
     }
 }

@@ -1,0 +1,33 @@
+﻿@model TournamentListingViewModel
+@{
+    ViewData["Title"] = "Tournaments";
+}
+<h2>@ViewData["Title"]</h2>
+<ul class="list-group">
+    @foreach (var tournament in Model.Tournaments)
+    {
+        <li class="list-group-item">
+            <img src="@tournament.GameImage" style="width:250px;height:160px;" />
+            <h2><a asp-action="Details" asp-route-id="@tournament.Id">@tournament.Name</a></h2>
+            <br />
+            <small>Game - @tournament.Game | Prize - @tournament.Prize | Starts - @tournament.StartDate.ToShortDateString()</small>
+        </li>
+    }
+</ul>
+@if (Model.TotalTournaments >= Model.Tournaments.Count())
+{
+    <ul class="pagination">
+        <li class="@(Model.CurrentPage == 1 ? "disabled" : string.Empty)">
+            <a asp-route-page="@Model.PreviousPage"
+               aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li class="@(Model.CurrentPage == Model.TotalPages ? "disabled" : string.Empty)">
+            <a asp-route-page="@Model.NextPage"
+               aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+}
