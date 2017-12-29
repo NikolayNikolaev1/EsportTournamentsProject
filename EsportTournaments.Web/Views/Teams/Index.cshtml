@@ -8,7 +8,7 @@
     @foreach (var teams in Model.Teams)
     {
         <li class="list-group-item">
-            <img src="@teams.TeamImageUrl" style="width:250px;height:160px;" />
+            <img src="@teams.TeamImageUrl" style="width:350px;height:260px;" />
             <a asp-action="Details" asp-route-id="@teams.Id">
                 <h1>
                     @teams.Name
