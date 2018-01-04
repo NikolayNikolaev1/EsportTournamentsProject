@@ -13,13 +13,13 @@ namespace EsportTournaments.Services
 
         Task<TeamDetailsServiceModel> ByIdAsync(int id);
 
-        Task<bool> PlayerJoin(int teamId, string userId);
+        Task<bool> PlayerJoinAsync(int teamId, string userId);
+
+        Task<bool> PlayerLeaveAsync(int teamId, string userId);
 
         Task<IEnumerable<TeamListingServiceModel>> AllAsync(int page = 1);
 
-        Task<bool> PlayerLeave(int teamId, string userId);
-
-        Task<bool> UserIsInTeam(int teamId, string userId);
+        Task<bool> UserIsInTeamAsync(int teamId, string userId);
 
         Task<int> TotalAsync();
     }

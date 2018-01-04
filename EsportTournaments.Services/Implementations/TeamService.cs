@@ -60,7 +60,7 @@ namespace EsportTournaments.Services.Implementations
         public async Task<IEnumerable<Game>> GetAllGames()
             => await this.db.Games.ToListAsync();
 
-        public async Task<bool> PlayerJoin(int teamId, string userId)
+        public async Task<bool> PlayerJoinAsync(int teamId, string userId)
         {
             var teamInfo = await this.GetTeamInfo(teamId, userId);
 
@@ -83,7 +83,7 @@ namespace EsportTournaments.Services.Implementations
             return true;
         }
 
-        public async Task<bool> PlayerLeave(int teamId, string userId)
+        public async Task<bool> PlayerLeaveAsync(int teamId, string userId)
         {
             var teamInfo = await this.GetTeamInfo(teamId, userId);
             var currentTeam = this.db
@@ -108,7 +108,7 @@ namespace EsportTournaments.Services.Implementations
             return true;
         }
 
-        public async Task<bool> UserIsInTeam(int teamId, string userId)
+        public async Task<bool> UserIsInTeamAsync(int teamId, string userId)
             => await this.db
                 .Teams
                 .AnyAsync(t => t.Id == teamId && t.Players.Any(p => p.PlayerId == userId));

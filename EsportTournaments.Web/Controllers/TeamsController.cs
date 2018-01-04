@@ -13,12 +13,14 @@ namespace EsportTournaments.Web.Controllers
 {
     public class TeamsController : Controller
     {
-        private readonly ITeamService teams;
         private readonly UserManager<User> userManager;
+        private readonly ITeamService teams;
+        private readonly IGameService games;
 
-        public TeamsController(ITeamService teams, UserManager<User> userManager)
+        public TeamsController(ITeamService teams, IGameService games, UserManager<User> userManager)
         {
             this.teams = teams;
+            this.games = games;
             this.userManager = userManager;
         }
 
@@ -47,7 +49,7 @@ namespace EsportTournaments.Web.Controllers
             {
                 var userId = this.userManager.GetUserId(User);
 
-                model.UserIsInTeam = await this.teams.UserIsInTeam(id, userId);
+                model.UserIsInTeam = await this.teams.UserIsInTeamAsync(id, userId);
             }
 
             return View(model);
@@ -63,8 +65,8 @@ namespace EsportTournaments.Web.Controllers
             }
 
             var games = await this
-                .teams
-                .GetAllGames();
+                .games
+                .GetAllGamesAsync();
 
             var gamesListItems = games
                 .Select(g => new SelectListItem
@@ -108,7 +110,7 @@ namespace EsportTournaments.Web.Controllers
         {
             var userId = this.userManager.GetUserId(User);
 
-            var result = await this.teams.PlayerJoin(id, userId);
+            var result = await this.teams.PlayerJoinAsync(id, userId);
 
             if (!result)
             {
@@ -126,7 +128,7 @@ namespace EsportTournaments.Web.Controllers
         {
             var userId = this.userManager.GetUserId(User);
 
-            var result = await this.teams.PlayerLeave(id, userId);
+            var result = await this.teams.PlayerLeaveAsync(id, userId);
 
             if (!result)
             {
