@@ -18,6 +18,8 @@ namespace EsportTournaments.Data.Models
 
         public DateTime StartDate { get; set; }
 
+        public bool HasStarted { get; set; }
+
         public bool HasEnded { get; set; }
 
         public int GameId { get; set; }
