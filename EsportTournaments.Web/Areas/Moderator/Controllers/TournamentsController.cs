@@ -75,10 +75,19 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                 "Tournaments", new { area = string.Empty });
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Remove(int id)
-        //{
-        //    var tournamentId = 
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Management(int id)
+        {
+            //var result = await this.tournaments.StartAsync(id);
+
+            //if (!result)
+            //{
+            //    return BadRequest();
+            //}
+
+            //TempData.AddSuccessMessage("Successfully started tournament!");
+
+            return this.View();
+        }
     }
 }
