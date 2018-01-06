@@ -2,6 +2,7 @@
 using EsportTournaments.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EsportTournaments.Services.Moderator.Implentations
@@ -36,24 +37,19 @@ namespace EsportTournaments.Services.Moderator.Implentations
             await this.db.SaveChangesAsync();
         }
 
-        public Task<bool> RemoveAsync(int id)
+        public async Task<bool> StartAsync(int id)
         {
-            var currentTournament = this.db
-                    .Teams
-                    .Where(t => t.Id == teamId)
-                    .FirstOrDefault();
+            var currentTournament = await this.db
+                    .Tournaments
+                    .Where(t => t.Id == id)
+                    .FirstOrDefaultAsync();
 
-            if (!teamInfo.UserIsInTeam
-                || teamInfo == null
-                || userId == currentTournament.CaptainId)
+            if (currentTournament.StartDate != DateTime.UtcNow)
             {
                 return false;
             }
 
-            var playerInTeam = await this.db
-                .FindAsync(typeof(PlayerTeam), userId, teamId);
-
-            this.db.Remove(playerInTeam);
+            currentTournament.HasStarted = true;
 
             await this.db.SaveChangesAsync();
 
