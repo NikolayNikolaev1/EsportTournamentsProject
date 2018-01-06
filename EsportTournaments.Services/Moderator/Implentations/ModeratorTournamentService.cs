@@ -36,6 +36,30 @@ namespace EsportTournaments.Services.Moderator.Implentations
             await this.db.SaveChangesAsync();
         }
 
+        public Task<bool> RemoveAsync(int id)
+        {
+            var currentTournament = this.db
+                    .Teams
+                    .Where(t => t.Id == teamId)
+                    .FirstOrDefault();
+
+            if (!teamInfo.UserIsInTeam
+                || teamInfo == null
+                || userId == currentTournament.CaptainId)
+            {
+                return false;
+            }
+
+            var playerInTeam = await this.db
+                .FindAsync(typeof(PlayerTeam), userId, teamId);
+
+            this.db.Remove(playerInTeam);
+
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<int> TotalAsync()
             => await this.db
                 .Tournaments

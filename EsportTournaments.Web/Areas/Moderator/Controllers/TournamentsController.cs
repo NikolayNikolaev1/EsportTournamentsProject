@@ -74,5 +74,11 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                     .Index),
                 "Tournaments", new { area = string.Empty });
         }
+
+        //[HttpPost]
+        //public async Task<IActionResult> Remove(int id)
+        //{
+        //    var tournamentId = 
+        //}
     }
 }
