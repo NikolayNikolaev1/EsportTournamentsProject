@@ -2,6 +2,7 @@
 using EsportTournaments.Services;
 using EsportTournaments.Services.Moderator;
 using EsportTournaments.Web.Areas.Moderator.Models.Tournaments;
+using EsportTournaments.Web.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -45,6 +46,32 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
             });
         }
 
+        public async Task<IActionResult> Manage(int id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return this.RedirectToAction(nameof(AccountController.Login), "Account", new { area = string.Empty });
+            }
+
+            var teams = await this.tournaments
+                    .GetTeamsInTournamentAsync(id);
+
+
+            var teamsListItems = teams
+                    .Select(t => new SelectListItem
+                    {
+                        Text = t.Name,
+                        Value = t.Id.ToString()
+                    })
+                    .ToList();
+
+            return View(new ManageTournamentViewModel
+            {
+                Teams = teamsListItems,
+                Id = id
+            });
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateTournamentFormModel model)
@@ -75,19 +102,19 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                 "Tournaments", new { area = string.Empty });
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Management(int id)
-        {
-            //var result = await this.tournaments.StartAsync(id);
+        //[HttpPost]
+        //public async Task<IActionResult> Manage(int id)
+        //{
+        //    //var result = await this.tournaments.StartAsync(id);
 
-            //if (!result)
-            //{
-            //    return BadRequest();
-            //}
+        //    //if (!result)
+        //    //{
+        //    //    return BadRequest();
+        //    //}
 
-            //TempData.AddSuccessMessage("Successfully started tournament!");
+        //    //TempData.AddSuccessMessage("Successfully started tournament!");
 
-            return this.View();
-        }
+        //    return this.View();
+        //}
     }
 }
