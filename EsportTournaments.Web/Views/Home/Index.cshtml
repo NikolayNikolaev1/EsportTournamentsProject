@@ -5,3 +5,16 @@
 <div class="jumbotron home-jumbotron">
     <h1 class="text-center">Welcome to Esport Tournaments</h1>
 </div>
+
+<dir class="list-group">
+    <li class="list-group-item">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <h1 class="text-center">First, make sure you have an account to start! <a asp-controller="Account" asp-action="Register">Register From Here!</a></h1>
+        }
+        <br />
+        <h1 class="text-center"><a asp-controller="Teams" asp-action="Create">Create</a> a team or join one from <a asp-controller="Teams" asp-action="Index">HERE!</a></h1>
+        <br />
+        <h1 class="text-center"><a asp-controller="Tournaments" asp-action="Index">Join</a> a tournament and start winning!</h1>
+    </li>
+</dir>
