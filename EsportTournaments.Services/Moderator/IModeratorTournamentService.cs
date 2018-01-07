@@ -13,5 +13,7 @@ namespace EsportTournaments.Services.Moderator
         Task<bool> StartAsync(int id);
 
         Task<IEnumerable<TeamInTournamentServiceModel>> GetTeamsInTournamentAsync(int id);
+
+        Task<bool> EndTournamentAndChooseAWinner(int tournamentId, int teamId);
     }
 }

@@ -41,6 +41,33 @@ namespace EsportTournaments.Services.Moderator.Implentations
             await this.db.SaveChangesAsync();
         }
 
+        public async Task<bool> EndTournamentAndChooseAWinner(int tournamentId, int teamId)
+        {
+            var tournament = this.db
+                    .Tournaments
+                    .Where(t => t.Id == tournamentId)
+                    .FirstOrDefault();
+
+            var team = this.db
+                    .Teams
+                    .Where(t => t.Id == teamId)
+                    .FirstOrDefault();
+
+            if (tournament == null
+                || team == null)
+            {
+                return false;
+            }
+
+            tournament.HasStarted = false;
+            tournament.HasEnded = true;
+            team.TournamentsWon++;
+
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<IEnumerable<TeamInTournamentServiceModel>> GetTeamsInTournamentAsync(int id)
             => await this.db
                 .Tournaments

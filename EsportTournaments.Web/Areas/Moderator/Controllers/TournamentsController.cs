@@ -85,6 +85,21 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
             return RedirectToAction(nameof(TournamentsController.Manage), "Tournaments", new { area = ModeratorArea, id });
         }
 
+        public async Task<IActionResult> End(int tournamentId, int winnerId)
+        {
+            var result = await this.tournaments
+                    .EndTournamentAndChooseAWinner(tournamentId, winnerId);
+
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            TempData.AddSuccessMessage("Successfully started tournament!");
+
+            return this.View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(CreateTournamentFormModel model)
         {
