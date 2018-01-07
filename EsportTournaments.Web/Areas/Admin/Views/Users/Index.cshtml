@@ -55,7 +55,7 @@
                     @user.BlizzardAccount
                 </th>
                 <th>
-                    <form asp-controller="Users" asp-action="AddToRole" method="post" >
+                    <form asp-controller="Users" asp-action="AddToRole" method="post">
                         <div class="row">
                             <div class="col-md-8">
                                 <input type="hidden" name="UserId" value="@user.Id" />
@@ -71,3 +71,7 @@
         }
     </tbody>
 </table>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
