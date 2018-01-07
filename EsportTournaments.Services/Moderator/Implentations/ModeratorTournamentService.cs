@@ -78,17 +78,18 @@ namespace EsportTournaments.Services.Moderator.Implentations
 
         public async Task<bool> StartAsync(int id)
         {
-            var currentTournament = await this.db
+            var currentTournament =  this.db
                     .Tournaments
                     .Where(t => t.Id == id)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefault();
 
             //if (currentTournament.StartDate != DateTime.UtcNow)
             //{
             //    return false;
             //}
 
-            if (currentTournament.HasStarted == true
+            if (currentTournament == null
+                || currentTournament.HasStarted == true
                 || currentTournament.HasEnded == true)
             {
                 return false;

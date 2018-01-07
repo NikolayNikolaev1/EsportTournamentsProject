@@ -50,7 +50,7 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return this.RedirectToAction(nameof(AccountController.Login), "Account", new { area = string.Empty });
+                return  this.RedirectToAction(nameof(AccountController.Login), "Account", new { area = string.Empty });
             }
 
             var teams = await this.tournaments
@@ -67,10 +67,38 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
 
             return View(new ManageTournamentViewModel
             {
-                Teams = teamsListItems
+                Teams = teamsListItems,
+                Id = id,
+
             });
         }
-        
+
+        public async Task<IActionResult> End(int id)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return this.RedirectToAction(nameof(AccountController.Login), "Account", new { area = string.Empty });
+            }
+
+            var teams = await this.tournaments
+                    .GetTeamsInTournamentAsync(id);
+
+
+            var teamsListItems = teams
+                    .Select(t => new SelectListItem
+                    {
+                        Text = t.Name,
+                        Value = t.Id.ToString()
+                    })
+                    .ToList();
+
+            return View(new EndTournamentViewModel
+            {
+                Teams = teamsListItems,
+                Id = id,
+            });
+        }
+
         public async Task<IActionResult> Start(int id)
         {
             var result = await this.tournaments.StartAsync(id);
@@ -81,25 +109,12 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
             }
 
             TempData.AddSuccessMessage("Successfully started tournament!");
-
-            TempData.AddSuccessMessage("Successfully started tournament!");
+            
 
             return RedirectToAction(nameof(TournamentsController.Manage), "Tournaments", new { area = ModeratorArea, id });
         }
 
-        public async Task<IActionResult> End(int tournamentId, int winnerId)
-        {
-            var result = await this.tournaments
-                    .EndTournamentAndChooseAWinner(tournamentId, winnerId);
-
-            if (!ModelState.IsValid)
-            {
-                return this.BadRequest();
-            }
-            TempData.AddSuccessMessage("Successfully started tournament!");
-
-            return this.View();
-        }
+        
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateTournamentFormModel model)
@@ -132,6 +147,22 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                     .TournamentsController
                     .Index),
                 "Tournaments", new { area = string.Empty });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> End(EndTournamentViewModel model)
+        {
+            var result = await this.tournaments
+                    .EndTournamentAndChooseAWinner(model.Id, model.TeamId);
+
+            if (!ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            TempData.AddSuccessMessage("Successfully started tournament!");
+
+            return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
         }
     }
 }
