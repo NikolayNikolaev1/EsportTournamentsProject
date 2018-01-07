@@ -9,7 +9,7 @@ namespace EsportTournaments.Services.Models
         public int Id { get; set; }
 
         public string Name { get; set; }
-
+        
         public string TeamImageUrl { get; set; }
 
         public string Game { get; set; }

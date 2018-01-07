@@ -1,7 +1,10 @@
-﻿using EsportTournaments.Data;
+﻿using AutoMapper.QueryableExtensions;
+using EsportTournaments.Data;
 using EsportTournaments.Data.Models;
+using EsportTournaments.Services.Moderator.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -36,6 +39,16 @@ namespace EsportTournaments.Services.Moderator.Implentations
 
             await this.db.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<TeamInTournamentServiceModel>> GetTeamsInTournamentAsync(int id)
+            => await this.db
+                .Tournaments
+                .Where(t => t.Id == id)
+                .SelectMany(t => t.Teams.Select(team => team.Team))
+                .ProjectTo<TeamInTournamentServiceModel>()
+                .ToListAsync();
+                
+                //.ProjectTo<ModeratorTournamentManageServiceModel>()
 
         public async Task<bool> StartAsync(int id)
         {
