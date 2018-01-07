@@ -71,7 +71,20 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                 Id = id
             });
         }
+        
+        public async Task<IActionResult> Start(int id)
+        {
+            var result = await this.tournaments.StartAsync(id);
 
+            //if (!result)
+            //{
+            //    return BadRequest();
+            //}
+
+            TempData.AddSuccessMessage("Successfully started tournament!");
+
+            return RedirectToAction(nameof(TournamentsController.Manage), "Tournaments", new { area = ModeratorArea, id });
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateTournamentFormModel model)
@@ -81,10 +94,10 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                 return View(model);
             }
 
-            if (model.StartDate < DateTime.UtcNow)
-            {
-                return View(model);
-            }
+            //if (model.StartDate < DateTime.UtcNow)
+            //{
+            //    return View(model);
+            //}
 
             TempData.AddSuccessMessage($"Successfully created tournament {model.Name}");
 
@@ -101,20 +114,5 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
                     .Index),
                 "Tournaments", new { area = string.Empty });
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Manage(int id)
-        //{
-        //    //var result = await this.tournaments.StartAsync(id);
-
-        //    //if (!result)
-        //    //{
-        //    //    return BadRequest();
-        //    //}
-
-        //    //TempData.AddSuccessMessage("Successfully started tournament!");
-
-        //    return this.View();
-        //}
     }
 }

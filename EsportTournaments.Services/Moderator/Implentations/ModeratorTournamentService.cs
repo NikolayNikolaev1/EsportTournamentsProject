@@ -21,10 +21,10 @@ namespace EsportTournaments.Services.Moderator.Implentations
 
         public async Task CreateAsync(string name, PrizeType prize, DateTime startDate, string gameId)
         {
-            if (startDate < DateTime.UtcNow)
-            {
-                //TODO: Add error 
-            }
+            //if (startDate < DateTime.UtcNow)
+            //{
+            //    //TODO: Add error 
+            //}
 
             var tournament = new Tournament
             {
@@ -47,8 +47,6 @@ namespace EsportTournaments.Services.Moderator.Implentations
                 .SelectMany(t => t.Teams.Select(team => team.Team))
                 .ProjectTo<TeamInTournamentServiceModel>()
                 .ToListAsync();
-                
-                //.ProjectTo<ModeratorTournamentManageServiceModel>()
 
         public async Task<bool> StartAsync(int id)
         {
@@ -57,7 +55,13 @@ namespace EsportTournaments.Services.Moderator.Implentations
                     .Where(t => t.Id == id)
                     .FirstOrDefaultAsync();
 
-            if (currentTournament.StartDate != DateTime.UtcNow)
+            //if (currentTournament.StartDate != DateTime.UtcNow)
+            //{
+            //    return false;
+            //}
+
+            if (currentTournament.HasStarted == true
+                || currentTournament.HasEnded == true)
             {
                 return false;
             }
