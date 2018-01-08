@@ -28,8 +28,8 @@ namespace EsportTournaments.Services.Implementations
         public async Task<IEnumerable<TournamentListingServiceModel>> AllAsync(int page = 1)
              => await this.db
                  .Tournaments
-                 .Where(t => t.HasEnded == false)
-                 .OrderBy(t => t.StartDate)
+                 .OrderBy(t => t.HasEnded)
+                 .ThenBy(t => t.StartDate)
                  .Skip((page - 1) * 6)
                  .Take(6)
                  .ProjectTo<TournamentListingServiceModel>()
