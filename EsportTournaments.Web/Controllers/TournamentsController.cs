@@ -104,7 +104,7 @@ namespace EsportTournaments.Web.Controllers
             {
                 return BadRequest();
             }
-
+            
             TempData.AddSuccessMessage("Successfully left tournament!");
 
             return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
