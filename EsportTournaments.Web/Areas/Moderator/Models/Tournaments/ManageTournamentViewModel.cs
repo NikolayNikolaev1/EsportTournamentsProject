@@ -1,4 +1,5 @@
-﻿using EsportTournaments.Services.Moderator.Models;
+﻿using EsportTournaments.Data.Models;
+using EsportTournaments.Services.Moderator.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ namespace EsportTournaments.Web.Areas.Moderator.Models.Tournaments
     {
         public int Id { get; set; }
 
-        public ModeratorTournamentManageServiceModel Tournament { get; set; }
+        public Tournament Tournament { get; set; }
 
         public IEnumerable<SelectListItem> Teams { get; set; }
 

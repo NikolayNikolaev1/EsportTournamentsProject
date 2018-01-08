@@ -56,6 +56,8 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
             var teams = await this.tournaments
                     .GetTeamsInTournamentAsync(id);
 
+            var tournament = await this.tournaments
+                .GetTournamentAsync(id);
 
             var teamsListItems = teams
                     .Select(t => new SelectListItem
@@ -69,7 +71,7 @@ namespace EsportTournaments.Web.Areas.Moderator.Controllers
             {
                 Teams = teamsListItems,
                 Id = id,
-
+                Tournament = tournament
             });
         }
 

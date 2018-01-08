@@ -6,6 +6,11 @@
 
 <h2>@ViewData["Title"]</h2>
 
+@if (Model.Tournament.HasEnded == true)
+{
+    <h2>ENDED</h2>
+}
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">

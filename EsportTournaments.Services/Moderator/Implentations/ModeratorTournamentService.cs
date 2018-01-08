@@ -76,6 +76,12 @@ namespace EsportTournaments.Services.Moderator.Implentations
                 .ProjectTo<TeamInTournamentServiceModel>()
                 .ToListAsync();
 
+        public async Task<Tournament> GetTournamentAsync(int id)
+            => await this.db
+                .Tournaments
+                .Where(t => t.Id == id)
+                .FirstOrDefaultAsync();
+
         public async Task<bool> StartAsync(int id)
         {
             var currentTournament =  this.db
