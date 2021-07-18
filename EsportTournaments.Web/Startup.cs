@@ -42,7 +42,7 @@ namespace EsportTournaments.Web
                 .AddEntityFrameworkStores<EsportTournamentsDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddAutoMapper();
+            services.AddAutoMapper(this.GetType());
 
             services.AddTransient<IAdminUserService, AdminUserService>();
             services.AddTransient<IAdminGameService, AdminGameService>();
@@ -67,27 +67,32 @@ namespace EsportTournaments.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
-                app.UseDatabaseErrorPage();
+                //app.UseBrowserLink();
+                //app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
-                    name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                    name: "area",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }
