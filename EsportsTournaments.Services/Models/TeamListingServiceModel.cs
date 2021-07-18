@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using EsportTournaments.Core.Mapping;
-using EsportTournaments.Data.Models;
+using EsportsTournaments.Core.Mapping;
+using EsportsTournaments.Data.Models;
 
-namespace EsportTournaments.Services.Models
+namespace EsportsTournaments.Services.Models
 {
     public class TeamListingServiceModel : IMapFrom<Team>, IHaveCustomMapping
     {

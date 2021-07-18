@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using static EsportTournaments.Data.DataConstants;
-
-namespace EsportTournaments.Data.Models
+﻿namespace EsportsTournaments.Data.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    using static Common.DataConstants;
+
     public class Tournament
     {
         public int Id { get; set; }
 
+        [MaxLength(TournamentNameMaxLength)]
+        [MinLength(TournamentNameMinLength)]
         [Required]
-        [MinLength(TournamentNameMinLenght)]
-        [MaxLength(MaxLenghtHundred)]
         public string Name { get; set; }
 
         public PrizeType Prize { get; set; }
@@ -26,6 +27,6 @@ namespace EsportTournaments.Data.Models
 
         public Game Game { get; set; }
 
-        public List<TeamTournament> Teams { get; set; } = new List<TeamTournament>();
+        public IEnumerable<TeamTournament> Teams { get; set; } = new List<TeamTournament>();
     }
 }

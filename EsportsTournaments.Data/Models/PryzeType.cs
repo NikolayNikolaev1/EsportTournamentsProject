@@ -1,4 +1,4 @@
-﻿namespace EsportTournaments.Data.Models
+﻿namespace EsportsTournaments.Data.Models
 {
     public enum PrizeType
     {

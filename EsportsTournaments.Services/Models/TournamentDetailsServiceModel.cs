@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using EsportTournaments.Core.Mapping;
-using EsportTournaments.Data.Models;
+using EsportsTournaments.Core.Mapping;
+using EsportsTournaments.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EsportTournaments.Services.Models
+namespace EsportsTournaments.Services.Models
 {
     public class TournamentDetailsServiceModel : IMapFrom<Tournament>, IMapFrom<Team>, IMapFrom<TeamTournament>, IHaveCustomMapping
     {

@@ -1,7 +1,7 @@
-﻿using EsportTournaments.Core.Mapping;
-using EsportTournaments.Data.Models;
+﻿using EsportsTournaments.Core.Mapping;
+using EsportsTournaments.Data.Models;
 
-namespace EsportTournaments.Services.Moderator.Models
+namespace EsportsTournaments.Services.Moderator.Models
 {
     public class TeamInTournamentServiceModel : IMapFrom<Team>
     {

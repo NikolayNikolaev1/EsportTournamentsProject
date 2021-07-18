@@ -1,44 +1,43 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using static EsportTournaments.Data.DataConstants;
-
-namespace EsportTournaments.Data.Models
+﻿namespace EsportsTournaments.Data.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
+    using static Common.DataConstants;
+
     public class Team
     {
         public int Id { get; set; }
 
+        [MaxLength(TeamNameMaxLength)]
+        [MinLength(TeamNameMinLength)]
         [Required]
-        [MinLength(TeamNameMinLenght)]
-        [MaxLength(TeamNameMaxLenght)]
         public string Name { get; set; }
 
+        [MaxLength(TeamTagMaxLength)]
+        [MinLength(TeamTagMinLength)]
+        [RegularExpression(@"\w+")]
         [Required]
-        [MinLength(TeamTagMinLenght)]
-        [MaxLength(TeamTagMaxLenght)]
-        [RegularExpression(LettersAndNumbersRgx)]
         public string Tag { get; set; }
 
-        [Range(0, 1000)]
+        [Range(TeamTournamentsWonMinLength, TeamTournamentsWonMaxLength)]
         public int TournamentsWon { get; set; }
 
+        [MaxLength(UrlMaxLength)]
+        [MinLength(UrlMinLength)]
         [Required]
-        [MinLength(UrlMinLenght)]
-        [MaxLength(UrlMaxLenght)]
         public string TeamImageUrl { get; set; }
 
-        [Required]
         public string CaptainId { get; set; }
 
         public User Captain { get; set; }
 
-        [Required]
         public int GameId { get; set; }
 
         public Game Game { get; set; }
 
-        public List<PlayerTeam> Players { get; set; } = new List<PlayerTeam>();
+        public IEnumerable<PlayerTeam> Players { get; set; } = new List<PlayerTeam>();
 
-        public List<TeamTournament> Tournaments { get; set; } = new List<TeamTournament>();
+        public IEnumerable<TeamTournament> Tournaments { get; set; } = new List<TeamTournament>();
     }
 }

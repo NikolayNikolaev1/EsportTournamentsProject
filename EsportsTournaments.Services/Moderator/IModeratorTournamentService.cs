@@ -1,10 +1,10 @@
-﻿using EsportTournaments.Data.Models;
-using EsportTournaments.Services.Moderator.Models;
+﻿using EsportsTournaments.Data.Models;
+using EsportsTournaments.Services.Moderator.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EsportTournaments.Services.Moderator
+namespace EsportsTournaments.Services.Moderator
 {
     public interface IModeratorTournamentService
     {

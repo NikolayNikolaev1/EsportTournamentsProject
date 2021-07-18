@@ -1,7 +1,7 @@
-﻿using EsportTournaments.Core.Mapping;
-using EsportTournaments.Data.Models;
+﻿using EsportsTournaments.Core.Mapping;
+using EsportsTournaments.Data.Models;
 
-namespace EsportTournaments.Services.Admin.Models
+namespace EsportsTournaments.Services.Admin.Models
 {
     public class AdminUserListingServiceModel : IMapFrom<User>
     {

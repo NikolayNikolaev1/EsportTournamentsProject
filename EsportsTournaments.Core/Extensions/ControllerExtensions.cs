@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace EsportTournaments.Core.Extensions
+namespace EsportsTournaments.Core.Extensions
 {
     public static class ControllerExtensions
     {

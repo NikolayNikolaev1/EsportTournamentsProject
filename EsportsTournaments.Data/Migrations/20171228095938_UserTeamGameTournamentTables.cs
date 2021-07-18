@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-
-namespace EsportTournaments.Data.Migrations
+﻿namespace EsportsTournaments.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Migrations;
+    using System;
+
     public partial class UserTeamGameTournamentTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

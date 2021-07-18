@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EsportTournaments.Services.Models
+namespace EsportsTournaments.Services.Models
 {
     public class TournamentWithTeamInfo
     {

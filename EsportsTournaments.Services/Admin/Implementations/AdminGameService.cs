@@ -1,26 +1,25 @@
-﻿using EsportTournaments.Data;
-using EsportTournaments.Data.Models;
+﻿using EsportsTournaments.Data;
+using EsportsTournaments.Data.Models;
 using System.Threading.Tasks;
 
-namespace EsportTournaments.Services.Admin.Implementations
+namespace EsportsTournaments.Services.Admin.Implementations
 {
     public class AdminGameService : IAdminGameService
     {
-        private readonly EsportTournamentsDbContext db;
+        private readonly EsportsTournamentsDbContext db;
 
-        public AdminGameService(EsportTournamentsDbContext db)
+        public AdminGameService(EsportsTournamentsDbContext db)
         {
             this.db = db;
         }
 
-        public async Task AddAsync(string name, string developer, string gameImageUrl, string gameWebsite)
+        public async Task AddAsync(string name, string developer, string gameImageUrl)
         {
             var game = new Game
             {
                 Name = name,
                 Developer = developer,
-                GameImageUrl = gameImageUrl,
-                GameWebsite = gameWebsite
+                GameImageUrl = gameImageUrl
             };
 
             this.db.Add(game);

@@ -1,8 +1,8 @@
-﻿using EsportTournaments.Services.Models;
+﻿using EsportsTournaments.Services.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EsportTournaments.Services
+namespace EsportsTournaments.Services
 {
     public interface ITournamentService
     {

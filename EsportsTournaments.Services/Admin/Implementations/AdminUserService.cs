@@ -1,17 +1,17 @@
 ﻿using AutoMapper.QueryableExtensions;
-using EsportTournaments.Data;
-using EsportTournaments.Services.Admin.Models;
+using EsportsTournaments.Data;
+using EsportsTournaments.Services.Admin.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace EsportTournaments.Services.Admin.Implementations
+namespace EsportsTournaments.Services.Admin.Implementations
 {
     public class AdminUserService : IAdminUserService
     {
-        private readonly EsportTournamentsDbContext db;
+        private readonly EsportsTournamentsDbContext db;
 
-        public AdminUserService(EsportTournamentsDbContext db)
+        public AdminUserService(EsportsTournamentsDbContext db)
         {
             this.db = db;
         }

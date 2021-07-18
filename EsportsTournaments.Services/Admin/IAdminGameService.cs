@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 
-namespace EsportTournaments.Services.Admin
+namespace EsportsTournaments.Services.Admin
 {
     public interface IAdminGameService
     {
-        Task AddAsync(string name, string developer, string gameImageUrl, string gameWebsite);
+        Task AddAsync(string name, string developer, string gameImageUrl);
     }
 }

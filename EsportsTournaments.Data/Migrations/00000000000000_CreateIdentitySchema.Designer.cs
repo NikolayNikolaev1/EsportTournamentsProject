@@ -1,12 +1,12 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace EsportTournaments.Data.Migrations
+﻿namespace EsportsTournaments.Data.Migrations
 {
-    [DbContext(typeof(EsportTournamentsDbContext))]
+    using System;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Infrastructure;
+    using Microsoft.EntityFrameworkCore.Metadata;
+    using Microsoft.EntityFrameworkCore.Migrations;
+
+    [DbContext(typeof(EsportsTournamentsDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
@@ -123,7 +123,7 @@ namespace EsportTournaments.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("EsportTournaments.Web.Models.User", b =>
+            modelBuilder.Entity("EsportsTournaments.Web.Models.User", b =>
                 {
                     b.Property<string>("Id");
 
@@ -182,7 +182,7 @@ namespace EsportTournaments.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("EsportTournaments.Web.Models.User")
+                    b.HasOne("EsportsTournaments.Web.Models.User")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -190,7 +190,7 @@ namespace EsportTournaments.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("EsportTournaments.Web.Models.User")
+                    b.HasOne("EsportsTournaments.Web.Models.User")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -203,7 +203,7 @@ namespace EsportTournaments.Data.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EsportTournaments.Web.Models.User")
+                    b.HasOne("EsportsTournaments.Web.Models.User")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

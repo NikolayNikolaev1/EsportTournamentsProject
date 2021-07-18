@@ -1,4 +1,4 @@
-﻿namespace EsportTournaments.Core
+﻿namespace EsportsTournaments.Core
 {
     public interface IService
     {

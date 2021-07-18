@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using EsportTournaments.Core.Mapping;
-using EsportTournaments.Data.Models;
+using EsportsTournaments.Core.Mapping;
+using EsportsTournaments.Data.Models;
+using System.Linq;
 
-namespace EsportTournaments.Services.Models
+namespace EsportsTournaments.Services.Models
 {
     public class UserProfileTeamsServiceModel : IMapFrom<Team>, IHaveCustomMapping
     {
@@ -23,7 +24,7 @@ namespace EsportTournaments.Services.Models
         public void ConfigureMapping(Profile mapper)
             => mapper
                 .CreateMap<Team, UserProfileTeamsServiceModel>()
-                .ForMember(t => t.PlayersNumber, cfg => cfg.MapFrom(t => t.Players.Count))
+                .ForMember(t => t.PlayersNumber, cfg => cfg.MapFrom(t => t.Players.ToList().Count))
                 .ForMember(t => t.CaptainName, cfg => cfg.MapFrom(t => t.Captain.UserName))
                 .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name));
     }

@@ -1,8 +1,8 @@
-﻿using EsportTournaments.Core.Mapping;
-using EsportTournaments.Data.Models;
+﻿using EsportsTournaments.Core.Mapping;
+using EsportsTournaments.Data.Models;
 using System;
 
-namespace EsportTournaments.Services.Moderator.Models
+namespace EsportsTournaments.Services.Moderator.Models
 {
     public class ModeratorTournamentManageServiceModel : IMapFrom<Tournament>
     {

@@ -1,12 +1,12 @@
-﻿using EsportTournaments.Data;
-using EsportTournaments.Data.Models;
+﻿using EsportsTournaments.Data;
+using EsportsTournaments.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
-namespace EsportTournaments.Core.Extensions
+namespace EsportsTournaments.Core.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
@@ -14,7 +14,7 @@ namespace EsportTournaments.Core.Extensions
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                serviceScope.ServiceProvider.GetService<EsportTournamentsDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetService<EsportsTournamentsDbContext>().Database.Migrate();
 
                 var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
                 var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();

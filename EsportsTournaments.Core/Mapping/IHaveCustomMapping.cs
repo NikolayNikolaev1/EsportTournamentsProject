@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace EsportTournaments.Core.Mapping
+namespace EsportsTournaments.Core.Mapping
 {
     public interface IHaveCustomMapping
     {

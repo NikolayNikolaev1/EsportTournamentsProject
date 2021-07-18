@@ -1,20 +1,20 @@
 ﻿using AutoMapper.QueryableExtensions;
-using EsportTournaments.Data;
-using EsportTournaments.Data.Models;
-using EsportTournaments.Services.Moderator.Models;
+using EsportsTournaments.Data;
+using EsportsTournaments.Data.Models;
+using EsportsTournaments.Services.Moderator.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EsportTournaments.Services.Moderator.Implentations
+namespace EsportsTournaments.Services.Moderator.Implentations
 {
     public class ModeratorTournamentService : IModeratorTournamentService
     {
-        private readonly EsportTournamentsDbContext db;
+        private readonly EsportsTournamentsDbContext db;
 
-        public ModeratorTournamentService(EsportTournamentsDbContext db)
+        public ModeratorTournamentService(EsportsTournamentsDbContext db)
         {
             this.db = db;
         }

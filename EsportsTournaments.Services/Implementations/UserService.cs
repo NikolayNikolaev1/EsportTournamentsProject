@@ -1,19 +1,19 @@
 ﻿using AutoMapper.QueryableExtensions;
-using EsportTournaments.Data;
-using EsportTournaments.Data.Models;
-using EsportTournaments.Services.Models;
+using EsportsTournaments.Data;
+using EsportsTournaments.Data.Models;
+using EsportsTournaments.Services.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EsportTournaments.Services.Implementations
+namespace EsportsTournaments.Services.Implementations
 {
     public class UserService : IUserService
     {
-        private readonly EsportTournamentsDbContext db;
+        private readonly EsportsTournamentsDbContext db;
 
-        public UserService(EsportTournamentsDbContext db)
+        public UserService(EsportsTournamentsDbContext db)
         {
             this.db = db;
         }

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsportTournaments.Web", "EsportTournaments.Web\EsportTournaments.Web.csproj", "{F44E5809-7EE0-428F-9206-4238A330EA51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsportsTournaments.Data", "EsportsTournaments.Data\EsportsTournaments.Data.csproj", "{C6556A46-B8DC-4C3B-B2AA-814603DFC231}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsportsTournaments.Data", "EsportsTournaments.Data\EsportsTournaments.Data.csproj", "{C6556A46-B8DC-4C3B-B2AA-814603DFC231}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsportsTournaments.Services", "EsportsTournaments.Services\EsportsTournaments.Services.csproj", "{7810CE0E-376C-41EB-A49E-9766174A3B28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsportsTournaments.Services", "EsportsTournaments.Services\EsportsTournaments.Services.csproj", "{7810CE0E-376C-41EB-A49E-9766174A3B28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EsportsTournaments.Core", "EsportsTournaments.Core\EsportsTournaments.Core.csproj", "{5B46D23D-8996-43AD-AC3F-231D6614FEBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsportsTournaments.Core", "EsportsTournaments.Core\EsportsTournaments.Core.csproj", "{5B46D23D-8996-43AD-AC3F-231D6614FEBB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsportsTournaments.Web", "EsportsTournaments.Web\EsportsTournaments.Web.csproj", "{6BFC6439-4F3B-4784-89B5-0757F3E17EF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EsportsTournaments.Common", "EsportsTournaments.Common\EsportsTournaments.Common.csproj", "{7AB870E8-EFED-4C5E-B0ED-B31DCA3E3565}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F44E5809-7EE0-428F-9206-4238A330EA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F44E5809-7EE0-428F-9206-4238A330EA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F44E5809-7EE0-428F-9206-4238A330EA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F44E5809-7EE0-428F-9206-4238A330EA51}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C6556A46-B8DC-4C3B-B2AA-814603DFC231}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6556A46-B8DC-4C3B-B2AA-814603DFC231}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6556A46-B8DC-4C3B-B2AA-814603DFC231}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +31,14 @@ Global
 		{5B46D23D-8996-43AD-AC3F-231D6614FEBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B46D23D-8996-43AD-AC3F-231D6614FEBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B46D23D-8996-43AD-AC3F-231D6614FEBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BFC6439-4F3B-4784-89B5-0757F3E17EF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BFC6439-4F3B-4784-89B5-0757F3E17EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BFC6439-4F3B-4784-89B5-0757F3E17EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BFC6439-4F3B-4784-89B5-0757F3E17EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AB870E8-EFED-4C5E-B0ED-B31DCA3E3565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AB870E8-EFED-4C5E-B0ED-B31DCA3E3565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AB870E8-EFED-4C5E-B0ED-B31DCA3E3565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AB870E8-EFED-4C5E-B0ED-B31DCA3E3565}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

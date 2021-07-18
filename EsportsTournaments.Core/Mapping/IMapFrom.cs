@@ -1,4 +1,4 @@
-﻿namespace EsportTournaments.Core.Mapping
+﻿namespace EsportsTournaments.Core.Mapping
 {
     public interface IMapFrom<Tmodel>
     {
