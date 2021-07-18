@@ -1,0 +1,38 @@
+﻿@model UserProfileServiceModel
+@{
+    ViewData["Title"] = $"{Model.Username}'s Profile";
+}
+<h2>@ViewData["Title"]</h2>
+
+@if (Model.Username == User.Identity.Name)
+{
+    <a asp-controller="Manage" asp-action="Index" class="btn btn-default">Edit Profile</a>
+}
+<hr />
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Team</th>
+            <th>Game</th>
+            <th>Tournaments Won</th>
+            <th>Number of Players</th>
+            <th>Captain of Team</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var team in Model.Teams)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">@team.Name</a>
+                </td>
+                <td>@team.Game</td>
+                <td>@team.TournamentsWon</td>
+                <td>@team.PlayersNumber</td>
+                <td>
+                    <a asp-controller="Users" asp-action="Profile" asp-route-username="@team.CaptainName">@team.CaptainName</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
