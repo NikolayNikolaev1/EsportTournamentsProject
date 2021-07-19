@@ -1,9 +1,11 @@
-﻿using AutoMapper;
-using System;
-using System.Linq;
-
-namespace EsportsTournaments.Core.Mapping
+﻿namespace EsportsTournaments.Core.Mapping
 {
+    using AutoMapper;
+    using System;
+    using System.Linq;
+
+    using static Common.GlobalConstants;
+
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
@@ -11,7 +13,7 @@ namespace EsportsTournaments.Core.Mapping
             var allTypes = AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(a => a.GetName().Name.Contains("EsportsTournaments"))
+                .Where(a => a.GetName().Name.Contains(SolutionName))
                 .SelectMany(a => a.GetTypes());
 
             allTypes

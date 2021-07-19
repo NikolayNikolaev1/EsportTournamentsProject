@@ -1,9 +1,9 @@
-﻿using EsportsTournaments.Data;
-using EsportsTournaments.Data.Models;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services.Admin.Implementations
+﻿namespace EsportsTournaments.Services.Admin.Implementations
 {
+    using Data;
+    using Data.Models;
+    using System.Threading.Tasks;
+
     public class AdminGameService : IAdminGameService
     {
         private readonly EsportsTournamentsDbContext db;

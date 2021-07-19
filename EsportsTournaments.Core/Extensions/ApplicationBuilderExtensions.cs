@@ -1,13 +1,13 @@
-﻿using EsportsTournaments.Data;
-using EsportsTournaments.Data.Models;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Core.Extensions
+﻿namespace EsportsTournaments.Core.Extensions
 {
+    using Data;
+    using Data.Models;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using System.Threading.Tasks;
+
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseDatabaseMigration(this IApplicationBuilder app)

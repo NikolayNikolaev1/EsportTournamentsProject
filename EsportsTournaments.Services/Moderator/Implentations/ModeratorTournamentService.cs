@@ -1,4 +1,5 @@
-﻿using AutoMapper.QueryableExtensions;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using EsportsTournaments.Data;
 using EsportsTournaments.Data.Models;
 using EsportsTournaments.Services.Moderator.Models;
@@ -13,10 +14,12 @@ namespace EsportsTournaments.Services.Moderator.Implentations
     public class ModeratorTournamentService : IModeratorTournamentService
     {
         private readonly EsportsTournamentsDbContext db;
+        private readonly IMapper mapper;
 
-        public ModeratorTournamentService(EsportsTournamentsDbContext db)
+        public ModeratorTournamentService(EsportsTournamentsDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task CreateAsync(string name, PrizeType prize, DateTime startDate, string gameId)
@@ -69,12 +72,13 @@ namespace EsportsTournaments.Services.Moderator.Implentations
         }
 
         public async Task<IEnumerable<TeamInTournamentServiceModel>> GetTeamsInTournamentAsync(int id)
-            => await this.db
+            => await this.mapper
+            .ProjectTo<TeamInTournamentServiceModel>(
+                this.db
                 .Tournaments
                 .Where(t => t.Id == id)
-                .SelectMany(t => t.Teams.Select(team => team.Team))
-                .ProjectTo<TeamInTournamentServiceModel>()
-                .ToListAsync();
+                .SelectMany(t => t.Teams.Select(team => team.Team)))
+            .ToListAsync();
 
         public async Task<Tournament> GetTournamentAsync(int id)
             => await this.db
@@ -84,7 +88,7 @@ namespace EsportsTournaments.Services.Moderator.Implentations
 
         public async Task<bool> StartAsync(int id)
         {
-            var currentTournament =  this.db
+            var currentTournament = this.db
                     .Tournaments
                     .Where(t => t.Id == id)
                     .FirstOrDefault();

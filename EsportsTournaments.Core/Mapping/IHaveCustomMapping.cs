@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-
-namespace EsportsTournaments.Core.Mapping
+﻿namespace EsportsTournaments.Core.Mapping
 {
+    using AutoMapper;
+
     public interface IHaveCustomMapping
     {
         void ConfigureMapping(Profile mapper);

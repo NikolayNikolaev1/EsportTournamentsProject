@@ -1,30 +1,33 @@
-﻿using AutoMapper.QueryableExtensions;
-using EsportsTournaments.Data;
-using EsportsTournaments.Data.Models;
-using EsportsTournaments.Services.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services.Implementations
+﻿namespace EsportsTournaments.Services.Implementations
 {
+    using AutoMapper;
+    using Data;
+    using Data.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class GameService : IGameService
     {
         private readonly EsportsTournamentsDbContext db;
+        private readonly IMapper mapper;
 
-        public GameService(EsportsTournamentsDbContext db)
+        public GameService(EsportsTournamentsDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<GameListingServiceModel>> AllAsync(int page = 1)
-         => await this.db
+         => await this.mapper
+            .ProjectTo<GameListingServiceModel>(
+                this.db
                 .Games
                 .Skip((page - 1) * 6)
-                .Take(6)
-                .ProjectTo<GameListingServiceModel>()
-                .ToListAsync();
+                .Take(6))
+            .ToListAsync();
 
         public async Task<IEnumerable<Game>> GetAllGamesAsync()
             => await this.db

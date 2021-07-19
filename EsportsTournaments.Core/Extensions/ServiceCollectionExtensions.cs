@@ -1,18 +1,20 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-using System.Reflection;
-
-namespace EsportsTournaments.Core.Extensions
+﻿namespace EsportsTournaments.Core.Extensions
 {
+    using Microsoft.Extensions.DependencyInjection;
+    using System.Linq;
+    using System.Reflection;
+
+    using static Common.GlobalConstants;
+
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDomainService(
             this IServiceCollection services)
         {
             Assembly
-                .GetAssembly(typeof(IService))
+                .Load($"{SolutionName}.Services")
                 .GetTypes()
-                .Where(t => t.IsClass && t.GetInterfaces().Any(i => i.Name == $"I{i.Name}"))
+                .Where(t => t.IsClass && t.GetInterfaces().Any(i => i.Name.Equals($"I{t.Name}")))
                 .Select(t => new
                 {
                     Interface = t.GetInterface($"I{t.Name}"),

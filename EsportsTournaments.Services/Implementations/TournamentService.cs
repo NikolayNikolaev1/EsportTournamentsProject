@@ -1,39 +1,43 @@
-﻿using AutoMapper.QueryableExtensions;
-using EsportsTournaments.Data;
-using EsportsTournaments.Data.Models;
-using EsportsTournaments.Services.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services.Implementations
+﻿namespace EsportsTournaments.Services.Implementations
 {
+    using AutoMapper;
+    using Data;
+    using Data.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class TournamentService : ITournamentService
     {
         private readonly EsportsTournamentsDbContext db;
+        private readonly IMapper mapper;
 
-        public TournamentService(EsportsTournamentsDbContext db)
+        public TournamentService(EsportsTournamentsDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<TournamentDetailsServiceModel> ById(int id)
-            => await this.db
+            => await this.mapper
+            .ProjectTo<TournamentDetailsServiceModel>(
+                this.db
                 .Tournaments
-                .Where(t => t.Id == id)
-                .ProjectTo<TournamentDetailsServiceModel>()
-                .FirstOrDefaultAsync();
+                .Where(t => t.Id == id))
+            .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<TournamentListingServiceModel>> AllAsync(int page = 1)
-             => await this.db
+             => await this.mapper
+            .ProjectTo<TournamentListingServiceModel>(
+                 this.db
                  .Tournaments
                  .OrderBy(t => t.HasEnded)
                  .ThenBy(t => t.StartDate)
                  .Skip((page - 1) * 6)
-                 .Take(6)
-                 .ProjectTo<TournamentListingServiceModel>()
-                 .ToListAsync();
+                 .Take(6))
+            .ToListAsync();
 
         public async Task<int> TotalAsync()
             => await this.db

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace EsportsTournaments.Core.Extensions
+﻿namespace EsportsTournaments.Core.Extensions
 {
+    using Microsoft.AspNetCore.Mvc;
+
     public static class ControllerExtensions
     {
         public static IActionResult ViewOrNotFound(this Controller controller, object model)

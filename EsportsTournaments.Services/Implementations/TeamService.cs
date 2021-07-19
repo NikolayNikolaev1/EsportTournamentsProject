@@ -1,38 +1,42 @@
-﻿using AutoMapper.QueryableExtensions;
-using EsportsTournaments.Data;
-using EsportsTournaments.Data.Models;
-using EsportsTournaments.Services.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services.Implementations
+﻿namespace EsportsTournaments.Services.Implementations
 {
+    using AutoMapper;
+    using Data;
+    using Data.Models;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class TeamService : ITeamService
     {
         private readonly EsportsTournamentsDbContext db;
+        private readonly IMapper mapper;
 
-        public TeamService(EsportsTournamentsDbContext db)
+        public TeamService(EsportsTournamentsDbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<TeamDetailsServiceModel> ByIdAsync(int id)
-            => await this.db
+            => await this.mapper
+            .ProjectTo<TeamDetailsServiceModel>(
+                this.db
                 .Teams
-                .Where(t => t.Id == id)
-                .ProjectTo<TeamDetailsServiceModel>()
-                .FirstOrDefaultAsync();
+                .Where(t => t.Id == id))
+            .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<TeamListingServiceModel>> AllAsync(int page = 1)
-            => await this.db
+            => await this.mapper
+            .ProjectTo<TeamListingServiceModel>(
+                this.db
                 .Teams
                 .OrderByDescending(t => t.TournamentsWon)
                 .Skip((page - 1) * 6)
-                .Take(6)
-                .ProjectTo<TeamListingServiceModel>()
-                .ToListAsync();
+                .Take(6))
+            .ToListAsync();
 
         public async Task CreateAsync(string name, string tag, string teamImageUrl, string captainId, string gameId)
         {
