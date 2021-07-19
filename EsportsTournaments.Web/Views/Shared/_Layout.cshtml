@@ -63,6 +63,18 @@
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @if (TempData.ContainsKey(TempDataSuccessMessageKey))
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            @if (TempData.ContainsKey(TempDataErrorMessageKey))
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
             @RenderBody()
         </main>
     </div>

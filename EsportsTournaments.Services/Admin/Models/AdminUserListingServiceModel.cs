@@ -1,8 +1,8 @@
-﻿using EsportsTournaments.Core.Mapping;
-using EsportsTournaments.Data.Models;
-
-namespace EsportsTournaments.Services.Admin.Models
+﻿namespace EsportsTournaments.Services.Admin.Models
 {
+    using Core.Mapping;
+    using Data.Models;
+
     public class AdminUserListingServiceModel : IMapFrom<User>
     {
         public string Id { get; set; }
@@ -10,13 +10,5 @@ namespace EsportsTournaments.Services.Admin.Models
         public string Username { get; set; }
 
         public string Email { get; set; }
-
-        public string Country { get; set; }
-
-        public string LeagueOfLegendsAccount { get; set; }
-
-        public string SteamAccount { get; set; }
-
-        public string BlizzardAccount { get; set; }
     }
 }

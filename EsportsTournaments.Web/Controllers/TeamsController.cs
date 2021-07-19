@@ -64,21 +64,9 @@
                 return BadRequest();
             }
 
-            var games = await this
-                .games
-                .GetAllGamesAsync();
-
-            var gamesListItems = games
-                .Select(g => new SelectListItem
-                {
-                    Text = g.Name,
-                    Value = g.Id.ToString()
-                })
-                .ToList();
-
             return View(new CreateTeamViewModel
             {
-                Games = gamesListItems
+                Games = await this.games.AllToSelectListAsync()
             });
         }
 

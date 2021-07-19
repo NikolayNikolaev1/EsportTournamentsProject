@@ -1,13 +1,13 @@
 ﻿namespace EsportsTournaments.Services
 {
-    using Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Models;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IGameService
     {
-        Task<IEnumerable<Game>> GetAllGamesAsync();
+        Task<IEnumerable<SelectListItem>> AllToSelectListAsync();
 
         Task<IEnumerable<GameListingServiceModel>> AllAsync(int page = 1);
 

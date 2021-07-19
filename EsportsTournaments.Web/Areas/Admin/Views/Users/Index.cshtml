@@ -9,51 +9,17 @@
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
-            <th>
-                Username
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Country
-            </th>
-            <th>
-                League Of Legends Account
-            </th>
-            <th>
-                Steam Account
-            </th>
-            <th>
-                Blizzard Account
-            </th>
-            <th>
-                Role
-            </th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model.Users)
         {
             <tr>
-                <th>
-                    @user.Username
-                </th>
-                <th>
-                    @user.Email
-                </th>
-                <th>
-                    @user.Country
-                </th>
-                <th>
-                    @user.LeagueOfLegendsAccount
-                </th>
-                <th>
-                    @user.SteamAccount
-                </th>
-                <th>
-                    @user.BlizzardAccount
-                </th>
+                <th>@user.Username</th>
+                <th>@user.Email</th>
                 <th>
                     <form asp-controller="Users" asp-action="AddToRole" method="post">
                         <div class="row">

@@ -1,11 +1,11 @@
-﻿using EsportsTournaments.Data.Models;
-using EsportsTournaments.Services.Moderator.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services.Moderator
+﻿namespace EsportsTournaments.Services.Moderator
 {
+    using Data.Models;
+    using Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IModeratorTournamentService
     {
         Task CreateAsync(string name, PrizeType prize, DateTime startDate, string gameId);

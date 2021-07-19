@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using Data;
-    using Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
     using Models;
     using System.Collections.Generic;
@@ -29,9 +29,14 @@
                 .Take(6))
             .ToListAsync();
 
-        public async Task<IEnumerable<Game>> GetAllGamesAsync()
+        public async Task<IEnumerable<SelectListItem>> AllToSelectListAsync()
             => await this.db
             .Games
+            .Select(g => new SelectListItem
+            {
+                Text = g.Name,
+                Value = g.Id.ToString()
+            })
             .ToListAsync();
 
         public async Task<int> TotalAsync()

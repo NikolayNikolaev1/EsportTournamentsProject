@@ -5,7 +5,8 @@
     using Models.Games;
     using Services.Admin;
     using System.Threading.Tasks;
-    using Web.Controllers;
+
+    using static Common.WebConstants;
 
     public class GamesController : BaseAdminController
     {
@@ -26,14 +27,22 @@
                 return View(model);
             }
 
-            await this.games.AddAsync(
+            var result = await this.games.AddAsync(
                 model.Name,
                 model.Developer,
                 model.GameImageUrl);
 
-            TempData.AddSuccessMessage($"Game {model.Name} added successfully!");
+            if (!result)
+            {
+                TempData.AddErrorMessage(string.Format(ErrorMessages.GameExists, model.Name));
+                return RedirectToAction(nameof(Add));
+            }
 
-            return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
+            TempData.AddSuccessMessage(string.Format(SuccessMessages.AddedGame, model.Name));
+
+            return RedirectToAction(
+                nameof(Web.Controllers.GamesController.Index),
+                "Home", new { area = string.Empty });
         }
     }
 }

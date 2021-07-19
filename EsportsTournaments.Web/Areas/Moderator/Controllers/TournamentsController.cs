@@ -11,10 +11,10 @@
     using System.Threading.Tasks;
     using Web.Controllers;
 
-    using static Core.WebConstants;
+    using static Common.WebConstants;
 
-    [Area(ModeratorArea)]
-    [Authorize(Roles = TournamentModeratorRole)]
+    [Area(Areas.Moderator)]
+    [Authorize(Roles = Roles.TournamentModerator)]
     public class TournamentsController : Controller
     {
         private readonly IModeratorTournamentService tournaments;
@@ -27,24 +27,44 @@
         }
 
         public async Task<IActionResult> Create()
-        {
-            var games = await this
-                .games
-                .GetAllGamesAsync();
-
-            var gamesListItems = games
-                .Select(g => new SelectListItem
-                {
-                    Text = g.Name,
-                    Value = g.Id.ToString()
-                })
-                .ToList();
-
-            return View(new CreateTournamentFormModel
+            => View(new CreateTournamentFormModel
             {
-                Games = gamesListItems
+                Games = await this.games.AllToSelectListAsync()
             });
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateTournamentFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            //if (model.StartDate < DateTime.UtcNow)
+            //{
+            //    return View(model);
+            //}
+
+            //if (model.StartDate < DateTime.UtcNow)
+            //{
+            //    return View(model);
+            //}
+
+            TempData.AddSuccessMessage(string.Format(SuccessMessages.AddedTournament, model.Name));
+
+            await this.tournaments.CreateAsync(
+                model.Name,
+                model.Prize,
+                model.StartDate,
+                model.GameId.ToString());
+
+            return this.RedirectToAction(
+                nameof(Web
+                    .Controllers
+                    .TournamentsController
+                    .Index),
+                "Tournaments", new { area = string.Empty });
         }
+
 
         [Authorize]
         public async Task<IActionResult> Manage(int id)
@@ -96,51 +116,16 @@
         public async Task<IActionResult> Start(int id)
         {
             var result = await this.tournaments.StartAsync(id);
-            
+
             if (!result)
             {
                 TempData.AddSuccessMessage("Tournament already started!");
             }
 
             TempData.AddSuccessMessage("Successfully started tournament!");
-            
 
-            return RedirectToAction(nameof(TournamentsController.Manage), "Tournaments", new { area = ModeratorArea, id });
-        }
 
-        
-
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateTournamentFormModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            //if (model.StartDate < DateTime.UtcNow)
-            //{
-            //    return View(model);
-            //}
-
-            //if (model.StartDate < DateTime.UtcNow)
-            //{
-            //    return View(model);
-            //}
-
-            TempData.AddSuccessMessage($"Successfully created tournament {model.Name}");
-
-            await this.tournaments.CreateAsync(
-                model.Name,
-                model.Prize,
-                model.StartDate,
-                model.GameId.ToString());
-
-            return this.RedirectToAction(
-                nameof(Web
-                    .Controllers
-                    .TournamentsController
-                    .Index),
-                "Tournaments", new { area = string.Empty });
+            return RedirectToAction(nameof(TournamentsController.Manage), "Tournaments", new { area = Areas.Moderator, id });
         }
 
         [HttpPost]

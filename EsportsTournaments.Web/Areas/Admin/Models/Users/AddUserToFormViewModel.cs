@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace EsportsTournaments.Web.Areas.Admin.Models.Users
+﻿namespace EsportsTournaments.Web.Areas.Admin.Models.Users
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class AddUserToFormViewModel
     {
         [Required]

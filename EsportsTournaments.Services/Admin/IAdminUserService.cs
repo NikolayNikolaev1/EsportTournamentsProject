@@ -1,9 +1,9 @@
-﻿using EsportsTournaments.Services.Admin.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services.Admin
+﻿namespace EsportsTournaments.Services.Admin
 {
+    using Models;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IAdminUserService
     {
         Task<IEnumerable<AdminUserListingServiceModel>> AllAsync();
