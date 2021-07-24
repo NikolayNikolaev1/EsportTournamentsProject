@@ -1,13 +1,8 @@
 ﻿namespace EsportsTournaments.Test.Services.Admin
 {
-    using AutoMapper;
-    using Core.Mapping;
-    using Data;
     using Data.Models;
     using EsportsTournaments.Services.Admin.Implementations;
     using FluentAssertions;
-    using Microsoft.EntityFrameworkCore;
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
@@ -18,18 +13,13 @@
         public async Task AllAsyncShouldReturnAllUsers()
         {
             // Arange
-            var dbOptions = new DbContextOptionsBuilder<EsportsTournamentsDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
-            var dbContext = new EsportsTournamentsDbContext(dbOptions);
+            var dbContext = Testing.CreateDatabaseContext();
+            var mapper = Testing.CreateMapper();
 
             await dbContext
                 .Users
                 .AddRangeAsync(new User { Id = "1" }, new User { Id = "2" }, new User { Id = "3" });
             await dbContext.SaveChangesAsync();
-
-            var mapper = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>())
-                .CreateMapper();
 
             var adminUserService = new AdminUserService(dbContext, mapper);
             // Act

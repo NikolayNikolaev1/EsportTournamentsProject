@@ -27,16 +27,17 @@
                 return View(model);
             }
 
-            var result = await this.games.AddAsync(
+            if (await this.games.ContaintsAsync(model.Name))
+            {
+                ModelState.AddModelError(nameof(model.Name),
+                    string.Format(ErrorMessages.GameExists, model.Name));
+                return RedirectToAction(nameof(Add));
+            }
+
+            await this.games.AddAsync(
                 model.Name,
                 model.Developer,
                 model.GameImageUrl);
-
-            if (!result)
-            {
-                TempData.AddErrorMessage(string.Format(ErrorMessages.GameExists, model.Name));
-                return RedirectToAction(nameof(Add));
-            }
 
             TempData.AddSuccessMessage(string.Format(SuccessMessages.AddedGame, model.Name));
 

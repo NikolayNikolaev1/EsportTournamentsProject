@@ -2,7 +2,7 @@
 {
     using Data;
     using Data.Models;
-    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
     public class AdminGameService : IAdminGameService
@@ -14,13 +14,8 @@
             this.db = db;
         }
 
-        public async Task<bool> AddAsync(string name, string developer, string gameImageUrl)
+        public async Task AddAsync(string name, string developer, string gameImageUrl)
         {
-            if (this.db.Games.Any(g => g.Name == name))
-            {
-                return false;
-            }
-
             var game = new Game
             {
                 Name = name,
@@ -30,8 +25,10 @@
 
             this.db.Add(game);
             await this.db.SaveChangesAsync();
-
-            return true;
         }
+
+        public async Task<bool> ContaintsAsync(string name)
+            => await this.db.Games
+            .AnyAsync(g => g.Name == name);
     }
 }

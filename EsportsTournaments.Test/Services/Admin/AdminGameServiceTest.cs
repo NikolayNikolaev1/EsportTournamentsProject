@@ -2,7 +2,6 @@
 {
     using Data.Models;
     using EsportsTournaments.Services.Admin.Implementations;
-    using Fixtures;
     using FluentAssertions;
     using System.Linq;
     using System.Threading.Tasks;
@@ -10,55 +9,59 @@
 
     public class AdminGameServiceTest
     {
-        private readonly DatabaseFixture dbFixture;
-
-        public AdminGameServiceTest(DatabaseFixture dbFixture)
-        {
-            this.dbFixture = dbFixture;
-        }
         [Fact]
-        public async Task AddSyncShouldAddGameSuccessfully()
+        public async Task AddAsyncShouldAddGameSuccessfully()
         {
             // Arange
-            var adminUserService = new AdminGameService(this.dbFixture.Context);
+            var dbContext = Testing.CreateDatabaseContext();
+            var adminUserService = new AdminGameService(dbContext);
 
             // Act
-            var result = await adminUserService.AddAsync("TestName", "TestDeveloper", "http://www.testimage.test");
+            await adminUserService.AddAsync("TestName", "TestDeveloper", "http://www.testimage.test");
 
             // Assert
-            this.dbFixture
-                .Context
+            dbContext
                 .Games
                 .Should()
                 .Match(r => r.Any(
                     g => g.Name == "TestName" &&
                         g.Developer == "TestDeveloper" &&
                         g.GameImageUrl == "http://www.testimage.test"));
-            result
-                .Should()
-                .BeTrue();
         }
 
         [Fact]
-        public async Task AddAsyncShouldNotAddGameWithSameName()
+        public async Task ContainsAsyncShouldReturnFalse()
         {
-            // Arange
-            this.dbFixture
-                .Context
-                .Games
-                .Add(new Game { Id = 1, Name = "TestName" });
-
-            var adminUserService = new AdminGameService(this.dbFixture.Context);
+            // Arrange
+            var dbContext = Testing.CreateDatabaseContext();
+            var adminUserService = new AdminGameService(dbContext);
 
             // Act
-            var result = await adminUserService.AddAsync(
-                "TestName", "TestDeveloper", "http://www.testimage.test");
+            var result = await adminUserService.ContaintsAsync("TestName");
 
             // Assert
             result
                 .Should()
                 .BeFalse();
+        }
 
+        [Fact]
+        public async Task ContainsAsyncShouldReturnTrue()
+        {
+            // Arange
+            var dbContext = Testing.CreateDatabaseContext();
+            await dbContext.Games.AddRangeAsync(new Game { Name = "TestName" });
+            await dbContext.SaveChangesAsync();
+
+            var adminUserService = new AdminGameService(dbContext);
+
+            // Act
+            var result = await adminUserService.ContaintsAsync("TestName");
+
+            // Assert
+            result
+                .Should()
+                .BeTrue();
         }
     }
 }
