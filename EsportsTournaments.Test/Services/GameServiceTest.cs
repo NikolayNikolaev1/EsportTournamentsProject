@@ -38,5 +38,45 @@
                 .And
                 .HaveCount(3);
         }
+
+
+        [Fact]
+        public async Task ContainsAsyncShouldReturnFalseIfGameDoesNotExist()
+        {
+            // Arrange
+            var dbContext = Testing.CreateDatabaseContext();
+            var mapper = Testing.CreateMapper();
+
+            var gameService = new GameService(dbContext, mapper);
+
+            // Act
+            var result = await gameService.ContainsAsync("TestName");
+
+            // Assert
+            result
+                .Should()
+                .BeFalse();
+        }
+
+        [Fact]
+        public async Task ContainsAsyncShouldReturnTrueIfGameExist()
+        {
+            // Arange
+            var dbContext = Testing.CreateDatabaseContext();
+            var mapper = Testing.CreateMapper();
+
+            await dbContext.Games.AddAsync(new Game { Name = "TestName" });
+            await dbContext.SaveChangesAsync();
+
+            var gameService = new GameService(dbContext, mapper);
+
+            // Act
+            var result = await gameService.ContainsAsync("TestName");
+
+            // Assert
+            result
+                .Should()
+                .BeTrue();
+        }
     }
 }

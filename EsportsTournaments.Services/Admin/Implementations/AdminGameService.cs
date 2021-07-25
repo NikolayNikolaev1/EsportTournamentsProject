@@ -26,9 +26,5 @@
             this.db.Add(game);
             await this.db.SaveChangesAsync();
         }
-
-        public async Task<bool> ContaintsAsync(string name)
-            => await this.db.Games
-            .AnyAsync(g => g.Name == name);
     }
 }

@@ -21,8 +21,4 @@
     <ProjectReference Include="..\EsportsTournaments.Services\EsportsTournaments.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Moderator\" />
-  </ItemGroup>
-
 </Project>

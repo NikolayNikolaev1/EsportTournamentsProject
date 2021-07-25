@@ -1,8 +1,10 @@
 ﻿namespace EsportsTournaments.Web.Areas.Admin.Controllers
 {
     using Core.Extensions;
+    using Core.Filters;
     using Microsoft.AspNetCore.Mvc;
     using Models.Games;
+    using Services;
     using Services.Admin;
     using System.Threading.Tasks;
 
@@ -10,31 +12,29 @@
 
     public class GamesController : BaseAdminController
     {
-        private readonly IAdminGameService games;
+        private readonly IAdminGameService adminGames;
+        private readonly IGameService games;
 
-        public GamesController(IAdminGameService games)
+        public GamesController(IAdminGameService adminGames, IGameService games)
         {
+            this.adminGames = adminGames;
             this.games = games;
         }
 
         public IActionResult Add() => this.View();
 
         [HttpPost]
+        [ValidateModelState]
         public async Task<IActionResult> Add(AddGameFormModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            if (await this.games.ContaintsAsync(model.Name))
+            if (await this.games.ContainsAsync(model.Name))
             {
                 ModelState.AddModelError(nameof(model.Name),
                     string.Format(ErrorMessages.GameExists, model.Name));
                 return RedirectToAction(nameof(Add));
             }
 
-            await this.games.AddAsync(
+            await this.adminGames.AddAsync(
                 model.Name,
                 model.Developer,
                 model.GameImageUrl);

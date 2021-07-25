@@ -1,6 +1,7 @@
 ﻿namespace EsportsTournaments.Services.Admin.Implementations
 {
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Data;
     using Microsoft.EntityFrameworkCore;
     using Models;
@@ -19,8 +20,9 @@
         }
 
         public async Task<IEnumerable<AdminUserListingServiceModel>> AllAsync()
-            => await this.mapper
-                .ProjectTo<AdminUserListingServiceModel>(this.db.Users)
-                .ToListAsync();
+            => await this.db
+            .Users
+            .ProjectTo<AdminUserListingServiceModel>(this.mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }

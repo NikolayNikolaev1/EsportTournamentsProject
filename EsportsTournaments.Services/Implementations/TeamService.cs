@@ -3,6 +3,7 @@
     using AutoMapper;
     using Data;
     using Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
     using Models;
     using System.Collections.Generic;
@@ -19,6 +20,22 @@
             this.db = db;
             this.mapper = mapper;
         }
+
+        public async Task<IEnumerable<SelectListItem>> AllToSelectListAsync(int tournamentId = 0)
+            => await this.db
+            .Teams
+            .Where(t => t.Tournaments.Any(tr => tr.TournamentId == tournamentId))
+            .Select(g => new SelectListItem
+            {
+                Text = g.Name,
+                Value = g.Id.ToString()
+            })
+            .ToListAsync();
+
+        public async Task<bool> ContainsAsync(int id)
+            => await this.db
+            .Teams
+            .AnyAsync(t => t.Id == id);
 
         public async Task<TeamDetailsServiceModel> ByIdAsync(int id)
             => await this.mapper

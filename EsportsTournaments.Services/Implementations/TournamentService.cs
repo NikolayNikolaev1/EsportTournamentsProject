@@ -39,6 +39,23 @@
                  .Take(6))
             .ToListAsync();
 
+        public async Task<bool> ContainsAsync(int id)
+            => await this.db
+            .Tournaments
+            .AnyAsync(t => t.Id == id);
+
+        public bool HasStarted(int id)
+            => this.db
+            .Tournaments
+            .FirstOrDefault(t => t.Id == id)
+            .HasStarted;
+
+        public bool HasEnded(int id)
+            => this.db
+            .Tournaments
+            .FirstOrDefault(t => t.Id == id)
+            .HasEnded;
+
         public async Task<int> TotalAsync()
             => await this.db
                 .Tournaments

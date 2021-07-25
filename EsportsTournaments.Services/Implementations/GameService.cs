@@ -39,6 +39,10 @@
             })
             .ToListAsync();
 
+        public async Task<bool> ContainsAsync(string name)
+            => await this.db.Games
+            .AnyAsync(g => g.Name == name);
+
         public async Task<int> TotalAsync()
         => await this.db
                 .Games

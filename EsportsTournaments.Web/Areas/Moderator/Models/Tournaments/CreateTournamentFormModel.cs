@@ -7,11 +7,14 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Common.DataConstants;
+    using static Common.WebConstants;
 
-    public class CreateTournamentFormModel
+    public class CreateTournamentFormModel : IValidatableObject
     {
-        [MaxLength(TournamentNameMaxLength)]
-        [MinLength(TournamentNameMinLength)]
+        [MaxLength(TournamentNameMaxLength,
+            ErrorMessage = ErrorMessages.InvalidPropertyMaxLength)]
+        [MinLength(TournamentNameMinLength,
+            ErrorMessage = ErrorMessages.InvalidPropertyMinLength)]
         [Required]
         public string Name { get; set; }
 

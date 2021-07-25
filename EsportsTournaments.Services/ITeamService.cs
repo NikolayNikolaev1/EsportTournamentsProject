@@ -1,12 +1,17 @@
-﻿using EsportsTournaments.Data.Models;
-using EsportsTournaments.Services.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services
+﻿namespace EsportsTournaments.Services
 {
+    using Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Models;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface ITeamService
     {
+        Task<IEnumerable<SelectListItem>> AllToSelectListAsync(int tournamentId = 0);
+
+        Task<bool> ContainsAsync(int id);
+
         Task CreateAsync(string name, string tag, string teamImageUrl, string captainId, string gameId);
 
         Task<IEnumerable<Game>> GetAllGames();

@@ -7,8 +7,8 @@
 
     public class CreateTeamViewModel
     {
-        [MaxLength(TeamNameMinLength)]
-        [MinLength(TeamNameMaxLength)]
+        [MaxLength(TeamNameMaxLength)]
+        [MinLength(TeamNameMinLength)]
         [Required]
         public string Name { get; set; }
 

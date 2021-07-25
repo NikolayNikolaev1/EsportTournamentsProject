@@ -3,11 +3,10 @@
     using Core.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Models.Tournaments;
     using Services;
     using Services.Moderator;
-    using System.Linq;
+    using System;
     using System.Threading.Tasks;
     using Web.Controllers;
 
@@ -17,19 +16,28 @@
     [Authorize(Roles = Roles.TournamentModerator)]
     public class TournamentsController : Controller
     {
-        private readonly IModeratorTournamentService tournaments;
+        private readonly IModeratorTournamentService moderatorTournaments;
         private readonly IGameService games;
+        private readonly ITeamService teams;
+        private readonly ITournamentService tournaments;
 
-        public TournamentsController(IModeratorTournamentService tournaments, IGameService games)
+        public TournamentsController(
+            IModeratorTournamentService moderatorTournaments,
+            IGameService games,
+            ITeamService teams,
+            ITournamentService tournaments)
         {
-            this.tournaments = tournaments;
+            this.moderatorTournaments = moderatorTournaments;
             this.games = games;
+            this.teams = teams;
+            this.tournaments = tournaments;
         }
 
         public async Task<IActionResult> Create()
             => View(new CreateTournamentFormModel
             {
-                Games = await this.games.AllToSelectListAsync()
+                Games = await this.games.AllToSelectListAsync(),
+                StartDate = DateTime.UtcNow
             });
 
         [HttpPost]
@@ -37,111 +45,87 @@
         {
             if (!ModelState.IsValid)
             {
+                model.Games = await this.games.AllToSelectListAsync();
                 return View(model);
             }
-            //if (model.StartDate < DateTime.UtcNow)
-            //{
-            //    return View(model);
-            //}
 
-            //if (model.StartDate < DateTime.UtcNow)
-            //{
-            //    return View(model);
-            //}
-
-            TempData.AddSuccessMessage(string.Format(SuccessMessages.AddedTournament, model.Name));
-
-            await this.tournaments.CreateAsync(
+            await this.moderatorTournaments.CreateAsync(
                 model.Name,
                 model.Prize,
                 model.StartDate,
-                model.GameId.ToString());
+                model.GameId);
+
+            TempData.AddSuccessMessage(string.Format(SuccessMessages.AddedTournament, model.Name));
 
             return this.RedirectToAction(
-                nameof(Web
-                    .Controllers
-                    .TournamentsController
-                    .Index),
-                "Tournaments", new { area = string.Empty });
+                nameof(Web.Controllers.TournamentsController.Index),
+                "Tournaments",
+                new { area = string.Empty });
         }
 
-
-        [Authorize]
         public async Task<IActionResult> Manage(int id)
-        {
-            var teams = await this.tournaments
-                    .GetTeamsInTournamentAsync(id);
-
-            var tournament = await this.tournaments
-                .GetTournamentAsync(id);
-
-            var teamsListItems = teams
-                    .Select(t => new SelectListItem
-                    {
-                        Text = t.Name,
-                        Value = t.Id.ToString()
-                    })
-                    .ToList();
-
-            return View(new ManageTournamentViewModel
+            => View(new ManageTournamentViewModel
             {
-                Teams = teamsListItems,
                 Id = id,
-                Tournament = tournament
+                Teams = await this.teams.AllToSelectListAsync(id),
+                Tournament = await this.moderatorTournaments.GetTournamentAsync(id)
             });
-        }
 
-        [Authorize]
         public async Task<IActionResult> End(int id)
-        {
-            var teams = await this.tournaments
-                    .GetTeamsInTournamentAsync(id);
-
-
-            var teamsListItems = teams
-                    .Select(t => new SelectListItem
-                    {
-                        Text = t.Name,
-                        Value = t.Id.ToString()
-                    })
-                    .ToList();
-
-            return View(new EndTournamentViewModel
+            => View(new EndTournamentViewModel
             {
-                Teams = teamsListItems,
                 Id = id,
+                Teams = await this.teams.AllToSelectListAsync(id),
             });
-        }
-
-        public async Task<IActionResult> Start(int id)
-        {
-            var result = await this.tournaments.StartAsync(id);
-
-            if (!result)
-            {
-                TempData.AddSuccessMessage("Tournament already started!");
-            }
-
-            TempData.AddSuccessMessage("Successfully started tournament!");
-
-
-            return RedirectToAction(nameof(TournamentsController.Manage), "Tournaments", new { area = Areas.Moderator, id });
-        }
 
         [HttpPost]
         public async Task<IActionResult> End(EndTournamentViewModel model)
         {
-            var result = await this.tournaments
-                    .EndTournamentAndChooseAWinner(model.Id, model.TeamId);
+            var tournamentId = model.Id;
+            var teamId = model.Id;
+
+            if (!await this.tournaments.ContainsAsync(tournamentId) ||
+                !await this.teams.ContainsAsync(teamId))
+            {
+                return NotFound();
+            }
 
             if (!ModelState.IsValid)
             {
                 return this.BadRequest();
             }
 
-            TempData.AddSuccessMessage("Successfully started tournament!");
+            await this.moderatorTournaments.EndTournamentAndChooseAWinner(model.Id, model.TeamId);
+            TempData.AddSuccessMessage(string.Format(SuccessMessages.TournamentEnded, model.Name));
 
-            return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
+            return RedirectToAction(
+                nameof(HomeController.Index),
+                "Home",
+                new { area = string.Empty });
+        }
+
+        public async Task<IActionResult> Start(int id)
+        {
+            if (!await this.tournaments.ContainsAsync(id))
+            {
+                return NotFound();
+            }
+
+            if (this.tournaments.HasStarted(id) ||
+                this.tournaments.HasEnded(id))
+            {
+                TempData.AddErrorMessage(ErrorMessages.TournamentStarted);
+            }
+            else
+            {
+                await this.moderatorTournaments.StartAsync(id);
+                TempData.AddSuccessMessage(SuccessMessages.TournamentStarted);
+            }
+
+            return RedirectToAction(
+                nameof(TournamentsController.Manage),
+                "Tournaments",
+                new { area = Areas.Moderator, id });
         }
     }
 }

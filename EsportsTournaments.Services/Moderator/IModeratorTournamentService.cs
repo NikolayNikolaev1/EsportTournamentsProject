@@ -8,13 +8,13 @@
 
     public interface IModeratorTournamentService
     {
-        Task CreateAsync(string name, PrizeType prize, DateTime startDate, string gameId);
+        Task CreateAsync(string name, PrizeType prize, DateTime startDate, int gameId);
 
-        Task<bool> StartAsync(int id);
+        Task EndTournamentAndChooseAWinner(int tournamentId, int teamId);
+
+        Task StartAsync(int id);
 
         Task<IEnumerable<TeamInTournamentServiceModel>> GetTeamsInTournamentAsync(int id);
-
-        Task<bool> EndTournamentAndChooseAWinner(int tournamentId, int teamId);
 
         Task<Tournament> GetTournamentAsync(int id);
     }

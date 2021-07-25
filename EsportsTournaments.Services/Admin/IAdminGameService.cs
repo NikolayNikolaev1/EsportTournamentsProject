@@ -5,7 +5,5 @@
     public interface IAdminGameService
     {
         Task AddAsync(string name, string developer, string gameImageUrl);
-
-        Task<bool> ContaintsAsync(string name);
     }
 }
