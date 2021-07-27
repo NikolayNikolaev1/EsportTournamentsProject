@@ -1,13 +1,16 @@
 ﻿namespace EsportsTournaments.Services.Implementations
 {
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Data;
     using Data.Models;
     using Microsoft.EntityFrameworkCore;
-    using Models;
+    using Models.Tournaments;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using static Common.WebConstants;
 
     public class TournamentService : ITournamentService
     {
@@ -20,29 +23,26 @@
             this.mapper = mapper;
         }
 
-        public async Task<TournamentDetailsServiceModel> ById(int id)
-            => await this.mapper
-            .ProjectTo<TournamentDetailsServiceModel>(
-                this.db
-                .Tournaments
-                .Where(t => t.Id == id))
-            .FirstOrDefaultAsync();
-
         public async Task<IEnumerable<TournamentListingServiceModel>> AllAsync(int page = 1)
-             => await this.mapper
-            .ProjectTo<TournamentListingServiceModel>(
-                 this.db
-                 .Tournaments
-                 .OrderBy(t => t.HasEnded)
-                 .ThenBy(t => t.StartDate)
-                 .Skip((page - 1) * 6)
-                 .Take(6))
+             => await this.db
+            .Tournaments
+            .OrderBy(t => t.HasEnded)
+            .ThenBy(t => t.StartDate)
+            .Skip((page - 1) * PaginationSize)
+            .Take(PaginationSize)
+            .ProjectTo<TournamentListingServiceModel>(this.mapper.ConfigurationProvider)
             .ToListAsync();
 
         public async Task<bool> ContainsAsync(int id)
             => await this.db
             .Tournaments
             .AnyAsync(t => t.Id == id);
+
+        public async Task<TournamentDetailsServiceModel> DetailsAsync(int id)
+            => await this.db
+            .Tournaments
+            .ProjectTo<TournamentDetailsServiceModel>(this.mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync(t => t.Id == id);
 
         public bool HasStarted(int id)
             => this.db
@@ -58,8 +58,8 @@
 
         public async Task<int> TotalAsync()
             => await this.db
-                .Tournaments
-                .CountAsync();
+            .Tournaments
+            .CountAsync();
 
         public async Task<bool> TeamJoin(int tournamentId, int teamId)
         {
@@ -105,11 +105,10 @@
         }
 
         public async Task<int> GetTournamentGameId(int id)
-            => await this.db
-                    .Tournaments
-                    .Where(t => t.Id == id)
-                    .Select(t => t.GameId)
-                    .FirstOrDefaultAsync();
+            => await this.db.Tournaments
+            .Where(t => t.Id == id)
+            .Select(t => t.GameId)
+            .FirstOrDefaultAsync();
 
         private async Task<TournamentWithTeamInfo> GetTournamentInfo(int tournamentId, int teamId)
             => await this.db

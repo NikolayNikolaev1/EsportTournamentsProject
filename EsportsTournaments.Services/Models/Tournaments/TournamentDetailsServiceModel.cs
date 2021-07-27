@@ -1,4 +1,4 @@
-﻿namespace EsportsTournaments.Services.Models
+﻿namespace EsportsTournaments.Services.Models.Tournaments
 {
     using AutoMapper;
     using Core.Mapping;
@@ -7,7 +7,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class TournamentDetailsServiceModel : IMapFrom<Tournament>, IMapFrom<Team>, IMapFrom<TeamTournament>, IHaveCustomMapping
+    public class TournamentDetailsServiceModel : IMapFrom<Tournament>, IHaveCustomMapping
     {
         public int Id { get; set; }
 

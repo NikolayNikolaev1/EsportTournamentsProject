@@ -7,7 +7,39 @@
     using Xunit;
 
     public class GameServiceTest
-    { 
+    {
+        [Fact]
+        public async Task AllAsyncShouldReturnAllGames()
+        {
+            // Arrange
+            var dbContext = Testing.CreateDatabaseContext();
+            var mapper = Testing.CreateMapper();
+
+            await dbContext
+                .AddRangeAsync(
+                new Game { Id = 1 },
+                new Game { Id = 2 },
+                new Game { Id = 3 });
+
+            await dbContext.SaveChangesAsync();
+
+            var gameService = new GameService(dbContext, mapper);
+
+            // Act
+            var result = await gameService.AllAsync();
+
+            // Assert
+            result
+                .Should()
+                .Contain(g => g.Id == 1)
+                .And
+                .Contain(g => g.Id == 2)
+                .And
+                .Contain(g => g.Id == 3)
+                .And
+                .HaveCount(3);
+        }
+
         [Fact]
         public async Task AllToSelectListAsyncShouldReturnAllGamesToSelectListItems()
         {
@@ -38,7 +70,6 @@
                 .And
                 .HaveCount(3);
         }
-
 
         [Fact]
         public async Task ContainsAsyncShouldReturnFalseIfGameDoesNotExist()
@@ -77,6 +108,32 @@
             result
                 .Should()
                 .BeTrue();
+        }
+
+        [Fact]
+        public async Task TotalAsyncShouldReturnTotalGamesCount()
+        {
+            // Arange
+            var dbContext = Testing.CreateDatabaseContext();
+            var mapper = Testing.CreateMapper();
+
+            await dbContext
+                .AddRangeAsync(
+                new Game { Id = 1 },
+                new Game { Id = 2 },
+                new Game { Id = 3 });
+
+            await dbContext.SaveChangesAsync();
+
+            var gameService = new GameService(dbContext, mapper);
+
+            // Act
+            var result = await gameService.TotalAsync();
+
+            // Assert
+            result
+                .Should()
+                .Be(3);
         }
     }
 }

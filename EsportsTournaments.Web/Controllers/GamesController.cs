@@ -18,7 +18,7 @@
             => View(new GamesListingViewModel
             {
                 Games = await this.games.AllAsync(page),
-                TotalTournaments = await this.games.TotalAsync(),
+                TotalGames = await this.games.TotalAsync(),
                 CurrentPage = page
             });
     }

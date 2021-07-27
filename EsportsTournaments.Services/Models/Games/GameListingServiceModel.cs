@@ -1,4 +1,4 @@
-﻿namespace EsportsTournaments.Services.Models
+﻿namespace EsportsTournaments.Services.Models.Games
 {
     using Core.Mapping;
     using Data.Models;

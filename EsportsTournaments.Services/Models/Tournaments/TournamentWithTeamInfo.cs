@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace EsportsTournaments.Services.Models
+﻿namespace EsportsTournaments.Services.Models.Tournaments
 {
+    using System;
+
     public class TournamentWithTeamInfo
     {
         public DateTime StartDate { get; set; }

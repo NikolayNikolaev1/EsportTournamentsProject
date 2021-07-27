@@ -1,10 +1,10 @@
-﻿using EsportsTournaments.Data.Models;
-using EsportsTournaments.Services.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace EsportsTournaments.Services
+﻿namespace EsportsTournaments.Services
 {
+    using Data.Models;
+    using Services.Models.Users;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
     public interface IUserService
     {
         Task<UserProfileServiceModel> ProfileAsync(string username);

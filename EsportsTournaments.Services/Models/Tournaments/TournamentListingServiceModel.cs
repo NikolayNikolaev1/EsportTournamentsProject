@@ -1,10 +1,10 @@
-﻿using AutoMapper;
-using EsportsTournaments.Core.Mapping;
-using EsportsTournaments.Data.Models;
-using System;
-
-namespace EsportsTournaments.Services.Models
+﻿namespace EsportsTournaments.Services.Models.Tournaments
 {
+    using AutoMapper;
+    using Core.Mapping;
+    using Data.Models;
+    using System;
+
     public class TournamentListingServiceModel : IMapFrom<Tournament>, IHaveCustomMapping
     {
         public int Id { get; set; }

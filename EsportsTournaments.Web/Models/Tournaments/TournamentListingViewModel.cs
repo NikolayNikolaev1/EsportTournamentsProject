@@ -1,8 +1,10 @@
 ﻿namespace EsportsTournaments.Web.Models.Tournaments
 {
-    using Services.Models;
+    using Services.Models.Tournaments;
     using System;
     using System.Collections.Generic;
+
+    using static Common.WebConstants;
 
     public class TournamentListingViewModel
     {
@@ -10,7 +12,7 @@
 
         public int TotalTournaments { get; set; }
 
-        public int TotalPages => (int)Math.Ceiling((double)this.TotalTournaments / 6);
+        public int TotalPages => (int)Math.Ceiling((double)this.TotalTournaments / PaginationSize);
 
         public int CurrentPage { get; set; }
 

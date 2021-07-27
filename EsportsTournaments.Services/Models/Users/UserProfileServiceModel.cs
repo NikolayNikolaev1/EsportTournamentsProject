@@ -1,24 +1,16 @@
-﻿using AutoMapper;
-using EsportsTournaments.Core.Mapping;
-using EsportsTournaments.Data.Models;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace EsportsTournaments.Services.Models
+﻿namespace EsportsTournaments.Services.Models.Users
 {
+    using AutoMapper;
+    using Core.Mapping;
+    using Data.Models;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class UserProfileServiceModel : IMapFrom<User>, IHaveCustomMapping
     {
         public string Username { get; set; }
 
         public string ProfilePictureUrl { get; set; }
-
-        public string Country { get; set; }
-
-        public string LeagueOfLegendsAccount { get; set; }
-
-        public string SteamAccount { get; set; }
-
-        public string BlizzardAccount { get; set; }
 
         public IEnumerable<UserProfileTeamsServiceModel> Teams { get; set; }
 

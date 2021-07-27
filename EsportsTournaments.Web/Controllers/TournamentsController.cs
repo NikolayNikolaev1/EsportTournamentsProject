@@ -17,7 +17,10 @@
         private readonly ITournamentService tournaments;
         private readonly IUserService users;
 
-        public TournamentsController(ITournamentService tournaments, UserManager<User> userManager, IUserService users)
+        public TournamentsController(
+            UserManager<User> userManager,
+            ITournamentService tournaments,
+            IUserService users)
         {
             this.tournaments = tournaments;
             this.userManager = userManager;
@@ -25,12 +28,18 @@
         }
 
         public async Task<IActionResult> Details(int id)
-        {
-            return this.ViewOrNotFound(new TournamentsDetailsViewModel
+            => this.ViewOrNotFound(new TournamentsDetailsViewModel
             {
-                Tournament = await this.tournaments.ById(id)
+                Tournament = await this.tournaments.DetailsAsync(id)
             });
-        }
+
+        public async Task<IActionResult> Index(int page = 1)
+            => View(new TournamentListingViewModel
+            {
+                Tournaments = await this.tournaments.AllAsync(page),
+                TotalTournaments = await this.tournaments.TotalAsync(),
+                CurrentPage = page
+            });
 
         [Authorize]
         public async Task<IActionResult> Join(int id)
@@ -55,14 +64,6 @@
                 Id = id
             });
         }
-
-        public async Task<IActionResult> Index(int page = 1)
-            => View(new TournamentListingViewModel
-            {
-                Tournaments = await this.tournaments.AllAsync(page),
-                TotalTournaments = await this.tournaments.TotalAsync(),
-                CurrentPage = page
-            });
 
         [Authorize]
         [HttpPost]
@@ -100,7 +101,7 @@
             {
                 return BadRequest();
             }
-            
+
             TempData.AddSuccessMessage("Successfully left tournament!");
 
             return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });

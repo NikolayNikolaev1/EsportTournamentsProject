@@ -1,13 +1,16 @@
 ﻿namespace EsportsTournaments.Services.Implementations
 {
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Data;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
-    using Models;
+    using Models.Games;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using static Common.WebConstants;
 
     public class GameService : IGameService
     {
@@ -21,12 +24,11 @@
         }
 
         public async Task<IEnumerable<GameListingServiceModel>> AllAsync(int page = 1)
-         => await this.mapper
-            .ProjectTo<GameListingServiceModel>(
-                this.db
-                .Games
-                .Skip((page - 1) * 6)
-                .Take(6))
+         => await this.db
+            .Games
+            .Skip((page - 1) * PaginationSize)
+            .Take(PaginationSize)
+            .ProjectTo<GameListingServiceModel>(this.mapper.ConfigurationProvider)
             .ToListAsync();
 
         public async Task<IEnumerable<SelectListItem>> AllToSelectListAsync()
@@ -45,7 +47,7 @@
 
         public async Task<int> TotalAsync()
         => await this.db
-                .Games
-                .CountAsync();
+            .Games
+            .CountAsync();
     }
 }

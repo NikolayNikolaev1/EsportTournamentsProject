@@ -1,10 +1,11 @@
 ﻿namespace EsportsTournaments.Services.Implementations
 {
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Data;
     using Data.Models;
     using Microsoft.EntityFrameworkCore;
-    using Models;
+    using Models.Users;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -27,11 +28,10 @@
                     .ToListAsync();
 
         public async Task<UserProfileServiceModel> ProfileAsync(string id)
-            => await this.mapper
-            .ProjectTo<UserProfileServiceModel>(
-                this.db
-                .Users
-                .Where(u => u.Id == id))
+            => await this.db
+            .Users
+            .Where(u => u.Id == id)
+            .ProjectTo<UserProfileServiceModel>(this.mapper.ConfigurationProvider)
             .FirstOrDefaultAsync();
     }
 }
