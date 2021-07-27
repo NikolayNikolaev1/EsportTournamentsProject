@@ -2,29 +2,31 @@
 {
     using Data.Models;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Models;
+    using Models.Teams;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface ITeamService
     {
+        Task<IEnumerable<TeamListingServiceModel>> AllAsync(int page = 1);
+
         Task<IEnumerable<SelectListItem>> AllToSelectListAsync(int tournamentId = 0);
 
         Task<bool> ContainsAsync(int id);
 
-        Task CreateAsync(string name, string tag, string teamImageUrl, string captainId, string gameId);
+        Task<bool> ContainsNameAsync(string name);
 
-        Task<IEnumerable<Game>> GetAllGames();
+        Task<bool> ContainsTagAsync(string tag);
 
-        Task<TeamDetailsServiceModel> ByIdAsync(int id);
+        Task CreateAsync(string name, string tag, string teamImageUrl, string captainId, int gameId);
 
-        Task<bool> PlayerJoinAsync(int teamId, string userId);
+        Task<TeamDetailsServiceModel> DetailsAsync(int id);
 
-        Task<bool> PlayerLeaveAsync(int teamId, string userId);
+        Task<bool> HasPlayerAsync(int teamId, string playerId);
 
-        Task<IEnumerable<TeamListingServiceModel>> AllAsync(int page = 1);
+        Task JoinAsync(int teamId, string playerId);
 
-        Task<bool> UserIsInTeamAsync(int teamId, string userId);
+        Task LeaveAsync(int teamId, string playerId);
 
         Task<int> TotalAsync();
     }

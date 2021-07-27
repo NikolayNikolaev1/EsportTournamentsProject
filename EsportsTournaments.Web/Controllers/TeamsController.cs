@@ -1,15 +1,16 @@
 ﻿namespace EsportsTournaments.Web.Controllers
 {
     using Core.Extensions;
+    using Core.Filters;
     using Data.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Models.Teams;
     using Services;
-    using System.Linq;
     using System.Threading.Tasks;
+
+    using static Common.WebConstants;
 
     public class TeamsController : Controller
     {
@@ -24,59 +25,33 @@
             this.userManager = userManager;
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> Index(int page = 1)
-            => View(new TeamListingViewModel
-            {
-                Teams = await this.teams.AllAsync(page),
-                TotalTournaments = await this.teams.TotalAsync(),
-                CurrentPage = page
-            });
-
-        public async Task<IActionResult> Details(int id)
-        {
-            var model = new TeamDetailsViewModel
-            {
-                Team = await this.teams.ByIdAsync(id)
-            };
-
-            if (model.Team == null)
-            {
-                return NotFound();
-            }
-
-            if (User.Identity.IsAuthenticated)
-            {
-                var userId = this.userManager.GetUserId(User);
-
-                model.UserIsInTeam = await this.teams.UserIsInTeamAsync(id, userId);
-            }
-
-            return View(model);
-        }
-
+        [Authorize]
         public async Task<IActionResult> Create()
-        {
-            var userId = this.userManager.GetUserId(User);
-
-            if (userId == null)
-            {
-                return BadRequest();
-            }
-
-            return View(new CreateTeamViewModel
+            => View(new CreateTeamViewModel
             {
                 Games = await this.games.AllToSelectListAsync()
             });
-        }
 
+        [Authorize]
         [HttpPost]
+        [ValidateModelState]
         public async Task<IActionResult> Create(CreateTeamViewModel model)
         {
             var userId = this.userManager.GetUserId(User);
 
-            if (!ModelState.IsValid)
+            if (await this.teams.ContainsNameAsync(model.Name))
             {
+                ModelState.AddModelError("Name",
+                    string.Format(ErrorMessages.TeamNameExists, model.Name));
+                model.Games = await this.games.AllToSelectListAsync();
+                return View(model);
+            }
+
+            if (await this.teams.ContainsTagAsync(model.Tag))
+            {
+                ModelState.AddModelError("Tag",
+                    string.Format(ErrorMessages.TeamTagExists, model.Tag));
+                model.Games = await this.games.AllToSelectListAsync();
                 return View(model);
             }
 
@@ -85,27 +60,61 @@
                     model.Tag,
                     model.TeamImageUrl,
                     userId,
-                    model.GameId.ToString());
+                    model.GameId);
 
-            TempData.AddSuccessMessage($"Team {model.Name} created.");
+            TempData.AddSuccessMessage(string.Format(SuccessMessages.CreateTeam, model.Name));
 
             return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            if (!await this.teams.ContainsAsync(id))
+            {
+                return NotFound();
+            }
+
+            var model = new TeamDetailsViewModel
+            {
+                Team = await this.teams.DetailsAsync(id)
+            };
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = this.userManager.GetUserId(User);
+                model.UserIsInTeam = await this.teams.HasPlayerAsync(id, userId);
+            }
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> Index(int page = 1)
+            => View(new TeamListingViewModel
+            {
+                Teams = await this.teams.AllAsync(page),
+                TotalTeams = await this.teams.TotalAsync(),
+                CurrentPage = page
+            });
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Join(int id)
         {
+            if (!await this.teams.ContainsAsync(id))
+            {
+                return NotFound();
+            }
+
             var userId = this.userManager.GetUserId(User);
 
-            var result = await this.teams.PlayerJoinAsync(id, userId);
-
-            if (!result)
+            if (await this.teams.HasPlayerAsync(id, userId))
             {
                 return BadRequest();
             }
 
-            TempData.AddSuccessMessage("Successfully joined team!");
+            await this.teams.JoinAsync(id, userId);
+
+            TempData.AddSuccessMessage(SuccessMessages.TeamJoined);
 
             return RedirectToAction(nameof(Details), new { id });
         }
@@ -114,16 +123,21 @@
         [HttpPost]
         public async Task<IActionResult> Leave(int id)
         {
+            if (!await this.teams.ContainsAsync(id))
+            {
+                return NotFound();
+            }
+
             var userId = this.userManager.GetUserId(User);
 
-            var result = await this.teams.PlayerLeaveAsync(id, userId);
-
-            if (!result)
+            if (!await this.teams.HasPlayerAsync(id, userId))
             {
                 return BadRequest();
             }
 
-            TempData.AddSuccessMessage("Successfully left team!");
+            await this.teams.LeaveAsync(id, userId);
+
+            TempData.AddSuccessMessage(SuccessMessages.TeamLeft);
 
             return RedirectToAction(nameof(Details), new { id });
         }

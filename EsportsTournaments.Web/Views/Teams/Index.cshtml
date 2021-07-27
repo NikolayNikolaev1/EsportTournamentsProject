@@ -19,7 +19,7 @@
         </li>
     }
 </ul>
-@if (Model.TotalTournaments >= Model.Teams.Count())
+@if (Model.TotalTeams >= Model.Teams.Count())
 {
     <ul class="pagination">
         <li class="@(Model.CurrentPage == 1 ? "disabled" : string.Empty)">

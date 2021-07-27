@@ -1,16 +1,18 @@
 ﻿namespace EsportsTournaments.Web.Models.Teams
 {
-    using Services.Models;
+    using Services.Models.Teams;
     using System;
     using System.Collections.Generic;
+
+    using static Common.WebConstants;
 
     public class TeamListingViewModel
     {
         public IEnumerable<TeamListingServiceModel> Teams { get; set; }
 
-        public int TotalTournaments { get; set; }
+        public int TotalTeams { get; set; }
 
-        public int TotalPages => (int)Math.Ceiling((double)this.TotalTournaments / 6);
+        public int TotalPages => (int)Math.Ceiling((double)this.TotalTeams / PaginationSize);
 
         public int CurrentPage { get; set; }
 

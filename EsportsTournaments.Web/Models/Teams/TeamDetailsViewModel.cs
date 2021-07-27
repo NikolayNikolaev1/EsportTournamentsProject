@@ -1,6 +1,6 @@
 ﻿namespace EsportsTournaments.Web.Models.Teams
 {
-    using Services.Models;
+    using Services.Models.Teams;
 
     public class TeamDetailsViewModel
     {
