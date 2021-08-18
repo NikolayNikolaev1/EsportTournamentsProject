@@ -2,12 +2,12 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class AddUserToFormViewModel
+    public class RemoveUserRoleFormModel
     {
         [Required]
         public string UserId { get; set; }
 
         [Required]
-        public string Role { get; set; }
+        public string CurrentRole { get; set; }
     }
 }

@@ -21,19 +21,21 @@
         }
 
         public IConfiguration Configuration { get; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<EsportsTournamentsDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-            })
+            services
+                .AddDefaultIdentity<User>(options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                })
+                .AddRoles<Role>()
                 .AddEntityFrameworkStores<EsportsTournamentsDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -45,7 +47,7 @@
                 options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
             });
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDatabaseMigration();
@@ -60,7 +62,7 @@
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

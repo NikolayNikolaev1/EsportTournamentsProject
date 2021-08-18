@@ -6,6 +6,13 @@
         public const string TempDataSuccessMessageKey = "SuccessMessage";
         public const int PaginationSize = 6;
 
+        public static class AdminCredentials
+        {
+            public const string Email = "admin@esportstournaments.test";
+            public const string Password = "admin12";
+            public const string Username = "admin";
+        }
+
         public static class Areas
         {
             public const string Admin = "Admin";
@@ -39,6 +46,7 @@
             public const string TeamLeft = "Successfully left team!";
             public const string TournamentStarted = "Successfully started tournament {0}!";
             public const string TournamentEnded = "Successfully ended tournament!";
+            public const string RemovedUserRole = "Removed role from user {0} successfully.";
         }
 
     }

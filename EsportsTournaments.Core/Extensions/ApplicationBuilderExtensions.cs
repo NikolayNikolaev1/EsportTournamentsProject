@@ -8,64 +8,75 @@
     using Microsoft.Extensions.DependencyInjection;
     using System.Threading.Tasks;
 
+    using static Common.WebConstants;
+
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder UseDatabaseMigration(this IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
+                // Checks for database changes and migrates them everytime the program runs.
                 serviceScope.ServiceProvider.GetService<EsportsTournamentsDbContext>().Database.Migrate();
 
                 var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
-                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<Role>>();
 
                 Task
                     .Run(async () =>
                     {
-                        var adminName = WebConstants.AdministratorRole;
-
-                        var roles = new[]
+                        var roleNames = typeof(Roles).GetFields();
+                        // Using reflection to get all roles and add them to db.
+                        foreach (var roleName in roleNames)
                         {
-                            adminName,
-                            WebConstants.RegularUserRole,
-                            WebConstants.TournamentModeratorRole
-                        };
-
-                        foreach (var role in roles)
-                        {
-                            var roleExists = await roleManager.RoleExistsAsync(role);
-
-                            if (!roleExists)
-                            {
-                                await roleManager.CreateAsync(new IdentityRole
-                                {
-                                    Name = role
-                                });
-                            }
-                        }
-
-                        var adminEmail = "admin@esports.com";
-                        var adminUsername = "Admin";
-
-                        var adminUser = await userManager.FindByEmailAsync(adminEmail);
-
-                        if (adminUser == null)
-                        {
-                            adminUser = new User
-                            {
-                                Email = adminEmail,
-                                UserName = adminUsername
-                            };
-
-                            await userManager.CreateAsync(adminUser, "admin12");
-
-                            await userManager.AddToRoleAsync(adminUser, adminName);
+                            await CreateRoleAsync(userManager, roleManager, roleName.Name);
                         }
                     })
                     .Wait();
             }
 
             return app;
+        }
+
+        // Creates a role if it does not exist with given roleName.
+        private static async Task CreateRoleAsync(
+           UserManager<User> userManager,
+           RoleManager<Role> roleManager,
+           string roleName)
+        {
+            bool roleExists = await roleManager.RoleExistsAsync(roleName);
+
+            if (!roleExists)
+            {
+                await roleManager.CreateAsync(new Role
+                {
+                    Name = roleName
+                });
+            }
+
+            // If role name is administrator, creates an administrator account.
+            if (roleName.Equals(Roles.Administrator))
+            {
+                await CreateAdminAsync(userManager);
+            }
+        }
+
+        // Creates default administrator account if there is none.
+        private static async Task CreateAdminAsync(UserManager<User> userManager)
+        {
+            User adminUser = await userManager.FindByEmailAsync(AdminCredentials.Email);
+
+            if (adminUser == null)
+            {
+                adminUser = new User
+                {
+                    Email = AdminCredentials.Email,
+                    UserName = AdminCredentials.Username
+                };
+
+                await userManager.CreateAsync(adminUser, AdminCredentials.Password);
+                await userManager.AddToRoleAsync(adminUser, Roles.Administrator);
+            }
         }
     }
 }

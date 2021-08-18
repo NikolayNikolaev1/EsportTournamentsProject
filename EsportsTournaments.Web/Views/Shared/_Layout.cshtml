@@ -20,7 +20,7 @@
 
                     <ul class="navbar-nav flex-grow-1">
 
-                        @if (User.IsInRole(WebConstants.AdministratorRole))
+                        @if (User.IsInRole(Roles.Administrator))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
@@ -30,7 +30,7 @@
                             </li>
                         }
 
-                        @if (User.IsInRole(WebConstants.TournamentModeratorRole))
+                        @if (User.IsInRole(Roles.TournamentModerator))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Moderator" asp-controller="Tournaments" asp-action="Create">Create Tournament</a>
@@ -38,8 +38,8 @@
                         }
 
                         @if (User.Identity.IsAuthenticated &&
-                            !User.IsInRole(WebConstants.TournamentModeratorRole) &&
-                            !User.IsInRole(WebConstants.AdministratorRole))
+                            !User.IsInRole(Roles.TournamentModerator) &&
+                            !User.IsInRole(Roles.Administrator))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Teams" asp-action="Create">Create Team</a>
