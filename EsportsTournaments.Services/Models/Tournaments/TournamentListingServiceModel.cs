@@ -22,7 +22,7 @@
         public void ConfigureMapping(Profile mapper)
             => mapper
                     .CreateMap<Tournament, TournamentListingServiceModel>()
-                    .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name))
-                    .ForMember(t => t.GameImage, cfg => cfg.MapFrom(t => t.Game.GameImageUrl));
+                    .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name));
+                    //.ForMember(t => t.GameImage, cfg => cfg.MapFrom(t => t.Game.GameImageUrl));
     }
 }

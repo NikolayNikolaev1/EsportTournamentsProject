@@ -27,7 +27,7 @@
             => mapper
                     .CreateMap<Tournament, TournamentDetailsServiceModel>()
                     .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name))
-                    .ForMember(t => t.GameImage, cfg => cfg.MapFrom(t => t.Game.GameImageUrl))
+                    //.ForMember(t => t.GameImage, cfg => cfg.MapFrom(t => t.Game.GameImageUrl))
                     .ForMember(t => t.Teams, cfg => cfg.MapFrom(t => t.Teams.Select(teams => teams.Team.Name)));
     }
 }

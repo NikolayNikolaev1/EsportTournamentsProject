@@ -3,7 +3,7 @@
     ViewData["Title"] = Model.Team.Name;
 }
 <h2>@ViewData["Title"] - Team Members: @Model.Team.Players.Count()</h2>
-<img src="@Model.Team.TeamImageUrl" style="width:150px;height:140px" />
+<img src="~/images/@Model.Team.Image" style="width:150px;height:140px" />
 <h3>Game - @Model.Team.Game</h3>
 <h4>Captain - @Model.Team.Captain</h4>
 <h3>Players:</h3>

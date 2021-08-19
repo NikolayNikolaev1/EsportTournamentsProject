@@ -6,6 +6,8 @@
         public const int GameDeveloperMinLength = 2;
         public const int GameNameMaxLength = 50;
         public const int GameNameMinLength = 2;
+        public const int ImageFileNameMaxLength = 256;
+        public const int ImageFileNameMinLength = 4;
         public const int TeamNameMaxLength = 30;
         public const int TeamNameMinLength = 5;
         public const int TeamTagMaxLength = 6;

@@ -11,6 +11,6 @@
 
         public string Developer { get; set; }
 
-        public string GameImageUrl { get; set; }
+        public string Image { get; set; }
     }
 }

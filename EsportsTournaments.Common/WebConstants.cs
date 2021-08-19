@@ -28,6 +28,9 @@
         public static class ErrorMessages
         {
             public const string GameExists = "Game with name {0} already exists.";
+            public const string InvalidImageFileExtension = "File extension is invalid. Only files with .jpeg, .jpg and .png are valid.";
+            public const string InvalidImageFileLength = "The file is too large. Max image length is 2 MB.";
+            public const string InvalidImageFileSignature = "File signature is invalid. Image can not be uploaded.";
             public const string InvalidPropertyMaxLength = "{0} max length can be {1} characters long.";
             public const string InvalidPropertyMinLength = "{0} length must be atleast {1} characters long.";
             public const string TeamNameExists = "Team with name {0} already exists";

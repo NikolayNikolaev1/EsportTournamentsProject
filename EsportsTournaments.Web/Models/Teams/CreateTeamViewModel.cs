@@ -1,5 +1,6 @@
 ﻿namespace EsportsTournaments.Web.Models.Teams
 {
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -18,11 +19,9 @@
         [Required]
         public string Tag { get; set; }
 
-        [Display(Name = "Team Logo URL")]
-        [MaxLength(UrlMaxLength)]
-        [MinLength(UrlMinLength)]
+        [Display(Name = "Team Logo")]
         [Required]
-        public string TeamImageUrl { get; set; }
+        public IFormFile Image { get; set; }
 
         [Display(Name = "Game")]
         [Required]

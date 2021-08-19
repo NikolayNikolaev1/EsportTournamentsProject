@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form enctype="multipart/form-data" method="post">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -23,9 +23,12 @@
                 <span asp-validation-for="Developer" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GameImageUrl"></label>
-                <input asp-for="GameImageUrl" class="form-control" />
-                <span asp-validation-for="GameImageUrl" class="text-danger"></span>
+                <label asp-for="Image" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="Image" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-default">Add Game</button>
         </form>
@@ -33,5 +36,14 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }

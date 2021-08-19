@@ -8,7 +8,7 @@
     @foreach (var game in Model.Games)
     {
         <li class="list-group-item">
-            <img src="@game.GameImageUrl" style="width:250px;height:160px;" />
+            <img src="~/images/@game.Image" style="width:250px;height:160px;" />
             <h2>@game.Name</h2>
             <h3>Developer - @game.Developer</h3>
         </li>

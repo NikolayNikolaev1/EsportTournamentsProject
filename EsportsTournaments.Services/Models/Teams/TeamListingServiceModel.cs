@@ -10,7 +10,7 @@
 
         public string Name { get; set; }
         
-        public string TeamImageUrl { get; set; }
+        public string Image { get; set; }
 
         public string Game { get; set; }
 

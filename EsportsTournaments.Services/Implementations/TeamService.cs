@@ -62,7 +62,7 @@
         public async Task CreateAsync(
             string name,
             string tag,
-            string teamImageUrl,
+            string fileName,
             string captainId,
             int gameId)
         {
@@ -70,7 +70,7 @@
             {
                 Name = name,
                 Tag = tag,
-                TeamImageUrl = teamImageUrl,
+                Image = fileName,
                 TournamentsWon = 0,
                 CaptainId = captainId,
                 GameId = gameId,

@@ -16,7 +16,7 @@
 
         public int TournamentsWon { get; set; }
 
-        public string TeamImageUrl { get; set; }
+        public string Image { get; set; }
 
         public string Captain { get; set; }
 

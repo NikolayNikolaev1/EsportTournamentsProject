@@ -1,5 +1,6 @@
 ﻿namespace EsportsTournaments.Web.Areas.Admin.Models.Games
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     using static Common.DataConstants;
@@ -14,20 +15,15 @@
         [Required]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(GameDeveloperMaxLength,
             ErrorMessage = ErrorMessages.InvalidPropertyMaxLength)]
         [MinLength(GameDeveloperMinLength,
             ErrorMessage = ErrorMessages.InvalidPropertyMinLength)]
+        [Required]
         public string Developer { get; set; }
 
-        [Display(Name = "Game Image URL")]
-        [MaxLength(UrlMaxLength,
-            ErrorMessage = ErrorMessages.InvalidPropertyMaxLength)]
-        [MinLength(UrlMinLength,
-            ErrorMessage = ErrorMessages.InvalidPropertyMinLength)]
-        [Url]
+        [Display(Name = "Game Image")]
         [Required]
-        public string GameImageUrl { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

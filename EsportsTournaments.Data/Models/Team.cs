@@ -23,10 +23,10 @@
         [Range(TeamTournamentsWonMinLength, TeamTournamentsWonMaxLength)]
         public int TournamentsWon { get; set; }
 
-        [MaxLength(UrlMaxLength)]
-        [MinLength(UrlMinLength)]
+        [MaxLength(ImageFileNameMaxLength)]
+        [MinLength(ImageFileNameMinLength)]
         [Required]
-        public string TeamImageUrl { get; set; }
+        public string Image { get; set; }
 
         public string CaptainId { get; set; }
 

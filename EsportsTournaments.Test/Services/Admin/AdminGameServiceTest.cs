@@ -26,7 +26,7 @@
                 .Contain(
                 g => g.Name == "TestName" &&
                 g.Developer == "TestDeveloper" &&
-                g.GameImageUrl == "http://www.testimage.test");
+                g.Image == "http://www.testimage.test");
         }
     }
 }

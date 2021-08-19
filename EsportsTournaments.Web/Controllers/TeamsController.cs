@@ -4,6 +4,7 @@
     using Core.Filters;
     using Data.Models;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Models.Teams;
@@ -17,12 +18,18 @@
         private readonly UserManager<User> userManager;
         private readonly ITeamService teams;
         private readonly IGameService games;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public TeamsController(ITeamService teams, IGameService games, UserManager<User> userManager)
+        public TeamsController(
+            ITeamService teams,
+            IGameService games,
+            UserManager<User> userManager,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.teams = teams;
             this.games = games;
             this.userManager = userManager;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [Authorize]
@@ -35,34 +42,55 @@
         [Authorize]
         [HttpPost]
         [ValidateModelState]
-        public async Task<IActionResult> Create(CreateTeamViewModel model)
+        public async Task<IActionResult> Create(CreateTeamViewModel formModel)
         {
             var userId = this.userManager.GetUserId(User);
 
-            if (await this.teams.ContainsNameAsync(model.Name))
+            if (await this.teams.ContainsNameAsync(formModel.Name))
             {
                 ModelState.AddModelError("Name",
-                    string.Format(ErrorMessages.TeamNameExists, model.Name));
-                model.Games = await this.games.AllToSelectListAsync();
-                return View(model);
+                    string.Format(ErrorMessages.TeamNameExists, formModel.Name));
+                formModel.Games = await this.games.AllToSelectListAsync();
+                return View(formModel);
             }
 
-            if (await this.teams.ContainsTagAsync(model.Tag))
+            if (await this.teams.ContainsTagAsync(formModel.Tag))
             {
                 ModelState.AddModelError("Tag",
-                    string.Format(ErrorMessages.TeamTagExists, model.Tag));
-                model.Games = await this.games.AllToSelectListAsync();
-                return View(model);
+                    string.Format(ErrorMessages.TeamTagExists, formModel.Tag));
+                formModel.Games = await this.games.AllToSelectListAsync();
+                return View(formModel);
             }
 
-            await this.teams.CreateAsync(
-                    model.Name,
-                    model.Tag,
-                    model.TeamImageUrl,
-                    userId,
-                    model.GameId);
+            var fileName = formModel.Image.FileName;
+            var imageModelKey = nameof(formModel.Image);
 
-            TempData.AddSuccessMessage(string.Format(SuccessMessages.CreateTeam, model.Name));
+            // Checks if image file extensions is valid.
+            if (!ImageFileExtensions.FileExtensionValidation(formModel.Image.FileName))
+            {
+                ModelState.AddModelError(imageModelKey, ErrorMessages.InvalidImageFileExtension);
+                return View(formModel);
+            }
+
+            // Checks if image file signature is valid
+            if (!ImageFileExtensions.FileSignatureValidation(fileName, formModel.Image.OpenReadStream()))
+            {
+                ModelState.AddModelError(imageModelKey, ErrorMessages.InvalidImageFileSignature);
+                return View(formModel);
+            }
+
+            // Uploads image to root folder and returns generated image file name.
+            var imageName = await ImageFileExtensions.UploadFileAsync(formModel.Image, webHostEnvironment.WebRootPath);
+
+
+            await this.teams.CreateAsync(
+                    formModel.Name,
+                    formModel.Tag,
+                    imageName,
+                    userId,
+                    formModel.GameId);
+
+            TempData.AddSuccessMessage(string.Format(SuccessMessages.CreateTeam, formModel.Name));
 
             return RedirectToAction(nameof(HomeController.Index), "Home", new { area = string.Empty });
         }
@@ -74,7 +102,7 @@
                 return NotFound();
             }
 
-            var model = new TeamDetailsViewModel
+            var formModel = new TeamDetailsViewModel
             {
                 Team = await this.teams.DetailsAsync(id)
             };
@@ -82,10 +110,10 @@
             if (User.Identity.IsAuthenticated)
             {
                 var userId = this.userManager.GetUserId(User);
-                model.UserIsInTeam = await this.teams.HasPlayerAsync(id, userId);
+                formModel.UserIsInTeam = await this.teams.HasPlayerAsync(id, userId);
             }
 
-            return View(model);
+            return View(formModel);
         }
 
         public async Task<IActionResult> Index(int page = 1)

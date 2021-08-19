@@ -24,7 +24,7 @@
                 {
                     Id = 1,
                     Name = "Alpha",
-                    TeamImageUrl = "test",
+                    Image = "test",
                     GameId = 1,
                     TournamentsWon = 0
                 },
@@ -32,7 +32,7 @@
                 {
                     Id = 2,
                     Name = "Beta",
-                    TeamImageUrl = "test",
+                    Image = "test",
                     GameId = 1,
                     TournamentsWon = 5
                 },
@@ -40,7 +40,7 @@
                 {
                     Id = 3,
                     Name = "Gamma",
-                    TeamImageUrl = "test",
+                    Image = "test",
                     GameId = 1,
                     TournamentsWon = 2
                 });
@@ -242,7 +242,7 @@
                 .Should()
                 .Contain(t => t.Name == "TestName"
                     && t.Tag == "TEST"
-                    && t.TeamImageUrl == "http://testimage.test"
+                    && t.Image == "http://testimage.test"
                     && t.CaptainId == "1"
                     && t.GameId == 1);
         }
@@ -266,7 +266,7 @@
                 {
                     Id = 1,
                     Name = "Team Test",
-                    TeamImageUrl = "testimage.test",
+                    Image = "testimage.test",
                     Tag = "Test",
                     GameId = 1,
                     CaptainId = "1",

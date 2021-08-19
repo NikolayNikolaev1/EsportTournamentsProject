@@ -14,15 +14,15 @@
         [Required]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(GameDeveloperMaxLength)]
         [MinLength(GameDeveloperMinLength)]
+        [Required]
         public string Developer { get; set; }
 
-        [MaxLength(UrlMaxLength)]
-        [MinLength(UrlMinLength)]
+        [MaxLength(ImageFileNameMaxLength)]
+        [MinLength(ImageFileNameMinLength)]
         [Required]
-        public string GameImageUrl { get; set; }
+        public string Image { get; set; }
 
         public IEnumerable<Team> Teams { get; set; } = new List<Team>();
 

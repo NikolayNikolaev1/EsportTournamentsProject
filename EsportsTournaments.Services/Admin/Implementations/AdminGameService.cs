@@ -2,7 +2,6 @@
 {
     using Data;
     using Data.Models;
-    using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
     public class AdminGameService : IAdminGameService
@@ -14,13 +13,13 @@
             this.db = db;
         }
 
-        public async Task AddAsync(string name, string developer, string gameImageUrl)
+        public async Task AddAsync(string name, string developer, string fileName)
         {
             var game = new Game
             {
                 Name = name,
                 Developer = developer,
-                GameImageUrl = gameImageUrl
+                Image = fileName
             };
 
             this.db.Add(game);

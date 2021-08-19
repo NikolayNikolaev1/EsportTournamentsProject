@@ -5,16 +5,16 @@
 <h2>@ViewData["Title"]</h2>
 
 <ul class="list-group" align="center">
-    @foreach (var teams in Model.Teams)
+    @foreach (var team in Model.Teams)
     {
         <li class="list-group-item">
-            <img src="@teams.TeamImageUrl" style="width:350px;height:260px;" />
-            <a asp-action="Details" asp-route-id="@teams.Id">
+            <img src="~/images/@team.Image" style="width:350px;height:260px;" />
+            <a asp-action="Details" asp-route-id="@team.Id">
                 <h1>
-                    @teams.Name
+                    @team.Name
                 </h1>
             </a>
-            <small>@teams.Game</small>
+            <small>@team.Game</small>
             <br />
         </li>
     }
