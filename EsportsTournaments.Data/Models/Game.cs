@@ -24,8 +24,6 @@
         [Required]
         public string Image { get; set; }
 
-        public IEnumerable<Team> Teams { get; set; } = new List<Team>();
-
         public IEnumerable<Tournament> Tournaments { get; set; } = new List<Tournament>();
     }
 }

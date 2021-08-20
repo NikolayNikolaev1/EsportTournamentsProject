@@ -21,10 +21,10 @@
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<Team>> GetAllCreatedTeamsAsync(int gameId, string id)
+        public async Task<IEnumerable<Team>> GetAllCreatedTeamsAsync(string id)
             => await this.db
                     .Teams
-                    .Where(t => t.CaptainId == id && t.GameId == gameId)
+                    .Where(t => t.CaptainId == id)
                     .ToListAsync();
 
         public async Task<UserProfileServiceModel> ProfileAsync(string id)

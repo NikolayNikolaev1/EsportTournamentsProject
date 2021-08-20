@@ -32,10 +32,6 @@
 
         public User Captain { get; set; }
 
-        public int GameId { get; set; }
-
-        public Game Game { get; set; }
-
         public IEnumerable<PlayerTeam> Players { get; set; } = new List<PlayerTeam>();
 
         public IEnumerable<TeamTournament> Tournaments { get; set; } = new List<TeamTournament>();

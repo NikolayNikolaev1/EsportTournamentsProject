@@ -3,6 +3,7 @@
     using AutoMapper;
     using Core.Mapping;
     using Data.Models;
+    using System.Linq;
 
     public class TeamListingServiceModel : IMapFrom<Team>, IHaveCustomMapping
     {
@@ -12,11 +13,11 @@
         
         public string Image { get; set; }
 
-        public string Game { get; set; }
+        public int PlayersCount { get; set; }
 
         public void ConfigureMapping(Profile mapper)
-             => mapper
-                     .CreateMap<Team, TeamListingServiceModel>()
-                     .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name));
+            => mapper
+            .CreateMap<Team, TeamListingServiceModel>()
+            .ForMember(t => t.PlayersCount, cfg => cfg.MapFrom(t => t.Players.Count()));
     }
 }

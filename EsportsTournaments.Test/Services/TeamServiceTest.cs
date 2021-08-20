@@ -25,7 +25,6 @@
                     Id = 1,
                     Name = "Alpha",
                     Image = "test",
-                    GameId = 1,
                     TournamentsWon = 0
                 },
                 new Team
@@ -33,7 +32,6 @@
                     Id = 2,
                     Name = "Beta",
                     Image = "test",
-                    GameId = 1,
                     TournamentsWon = 5
                 },
                 new Team
@@ -41,7 +39,6 @@
                     Id = 3,
                     Name = "Gamma",
                     Image = "test",
-                    GameId = 1,
                     TournamentsWon = 2
                 });
 
@@ -234,7 +231,7 @@
             var teamService = new TeamService(dbContext, mapper);
 
             // Act
-            await teamService.CreateAsync("TestName", "TEST", "http://testimage.test", "1", 1);
+            await teamService.CreateAsync("TestName", "TEST", "http://testimage.test", "1");
 
             // Assert
             dbContext
@@ -243,8 +240,7 @@
                 .Contain(t => t.Name == "TestName"
                     && t.Tag == "TEST"
                     && t.Image == "http://testimage.test"
-                    && t.CaptainId == "1"
-                    && t.GameId == 1);
+                    && t.CaptainId == "1");
         }
 
         [Fact]
@@ -268,7 +264,6 @@
                     Name = "Team Test",
                     Image = "testimage.test",
                     Tag = "Test",
-                    GameId = 1,
                     CaptainId = "1",
                     Players = new List<PlayerTeam>
                     {
@@ -302,13 +297,9 @@
                 .Should()
                 .Be("Test");
             result
-                .TeamImageUrl
+                .Image
                 .Should()
                 .Be("testimage.test");
-            result
-                .Game
-                .Should()
-                .Be("GameTest");
             result.Captain
                 .Should()
                 .Be("Tester");

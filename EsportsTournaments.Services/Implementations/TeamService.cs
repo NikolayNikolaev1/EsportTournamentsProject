@@ -63,8 +63,7 @@
             string name,
             string tag,
             string fileName,
-            string captainId,
-            int gameId)
+            string captainId)
         {
             var team = new Team
             {
@@ -72,8 +71,7 @@
                 Tag = tag,
                 Image = fileName,
                 TournamentsWon = 0,
-                CaptainId = captainId,
-                GameId = gameId,
+                CaptainId = captainId
             };
 
             team.Players.ToList().Add(new PlayerTeam

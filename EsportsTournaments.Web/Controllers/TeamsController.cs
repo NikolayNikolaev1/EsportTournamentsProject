@@ -87,8 +87,7 @@
                     formModel.Name,
                     formModel.Tag,
                     imageName,
-                    userId,
-                    formModel.GameId);
+                    userId);
 
             TempData.AddSuccessMessage(string.Format(SuccessMessages.CreateTeam, formModel.Name));
 

@@ -48,7 +48,7 @@
             var gameId = await this.tournaments.GetTournamentGameId(id);
 
             var teams = await this.users
-                .GetAllCreatedTeamsAsync(gameId, userId);
+                .GetAllCreatedTeamsAsync(userId);
 
             var teamsListItems = teams
                     .Select(t => new SelectListItem

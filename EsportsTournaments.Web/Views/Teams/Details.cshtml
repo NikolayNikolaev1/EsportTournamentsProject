@@ -4,7 +4,6 @@
 }
 <h2>@ViewData["Title"] - Team Members: @Model.Team.Players.Count()</h2>
 <img src="~/images/@Model.Team.Image" style="width:150px;height:140px" />
-<h3>Game - @Model.Team.Game</h3>
 <h4>Captain - @Model.Team.Captain</h4>
 <h3>Players:</h3>
 @foreach (var player in Model.Team.Players)

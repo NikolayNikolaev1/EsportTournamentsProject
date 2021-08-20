@@ -20,15 +20,12 @@
 
         public string Captain { get; set; }
 
-        public string Game { get; set; }
-
         public IEnumerable<string> Players { get; set; }
 
         public void ConfigureMapping(Profile mapper)
              => mapper
                      .CreateMap<Team, TeamDetailsServiceModel>()
                      .ForMember(t => t.Captain, cfg => cfg.MapFrom(t => t.Captain.UserName))
-                     .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name))
                      .ForMember(t => t.Players, cfg => cfg.MapFrom(t => t.Players.Select(p => p.Player.UserName)));
     }
 }

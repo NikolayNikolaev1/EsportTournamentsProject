@@ -1,6 +1,7 @@
 ﻿namespace EsportsTournaments.Web.Controllers
 {
     using Data.Models;
+    using EsportsTournaments.Web.Models.Users;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Services;
@@ -17,6 +18,8 @@
             this.userManager = userManager;
         }
 
+        // User profile.
+        [Route("/profile/{username}")]
         public async Task<IActionResult> Profile(string username)
         {
             var user = await this.userManager.FindByNameAsync(username);
@@ -26,9 +29,11 @@
                 return NotFound();
             }
 
-            var profile = await this.users.ProfileAsync(user.Id);
-
-            return this.View(profile);
+            return this.View(new UserProfileViewModel
+            {
+                UserInfo = await this.users.ProfileAsync(user.Id),
+                //CaptainTeams = await this.users.GetAllCreatedTeamsAsync(user.Id)
+            });
         }
     }
 }

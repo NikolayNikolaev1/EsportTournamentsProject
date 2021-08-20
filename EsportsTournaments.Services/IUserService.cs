@@ -9,6 +9,6 @@
     {
         Task<UserProfileServiceModel> ProfileAsync(string username);
 
-        Task<IEnumerable<Team>> GetAllCreatedTeamsAsync(int gameId, string id);
+        Task<IEnumerable<Team>> GetAllCreatedTeamsAsync(string id);
     }
 }

@@ -18,7 +18,7 @@
 
         Task<bool> ContainsTagAsync(string tag);
 
-        Task CreateAsync(string name, string tag, string fileName, string captainId, int gameId);
+        Task CreateAsync(string name, string tag, string fileName, string captainId);
 
         Task<TeamDetailsServiceModel> DetailsAsync(int id);
 
