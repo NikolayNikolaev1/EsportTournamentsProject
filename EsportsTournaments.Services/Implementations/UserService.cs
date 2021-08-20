@@ -5,6 +5,7 @@
     using Data;
     using Data.Models;
     using Microsoft.EntityFrameworkCore;
+    using Models.Teams;
     using Models.Users;
     using System.Collections.Generic;
     using System.Linq;
@@ -26,6 +27,22 @@
                     .Teams
                     .Where(t => t.CaptainId == id)
                     .ToListAsync();
+
+        // Returns team list model of all teams created by user with given id.
+        public async Task<IEnumerable<TeamListingServiceModel>> GetAllCreatedTeamsListAsync(string id)
+            => await this.db
+            .Teams
+            .Where(t => t.CaptainId == id)
+            .ProjectTo<TeamListingServiceModel>(this.mapper.ConfigurationProvider)
+            .ToListAsync();
+
+        // Returns team list model of all teams joined by user with given id.
+        public async Task<IEnumerable<TeamListingServiceModel>> GetAllJoinedTeamsListAsync(string id)
+            => await this.db
+            .Teams
+            .Where(t => t.Players.Any(p => p.PlayerId == id))
+            .ProjectTo<TeamListingServiceModel>(this.mapper.ConfigurationProvider)
+            .ToListAsync();
 
         public async Task<UserProfileServiceModel> ProfileAsync(string id)
             => await this.db

@@ -6,31 +6,26 @@
 
 @if (Model.UserInfo.Username == User.Identity.Name)
 {
-    <a asp-controller="Manage" asp-action="Index" class="btn btn-default">Edit Profile</a>
+    <a asp-controller="Manage" asp-action="Index" class="btn btn-primary">Edit Profile</a>
 }
 <hr />
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Team</th>
-            <th>Tournaments Won</th>
-            <th>Number of Players</th>
-            <th>Captain of Team</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var team in Model.CaptainTeams)
-        {
-            <tr>
-                <td>
-                    <a asp-controller="Teams" asp-action="Details" asp-route-id="@team.Id">@team.Name</a>
-                </td>
-                @*<td>@team.TournamentsWon</td>*@
-                @*<td>@team.PlayersNumber</td>*@
-                <td>
-                    @*<a asp-controller="Users" asp-action="Profile" asp-route-username="@team.CaptainName">@team.CaptainName</a>*@
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
+<div class="list-group list-group-horizontal-sm" id="myList" role="tablist">
+    <a href="#created-teams" class="btn btn-info btn-lg active mr-1" role="tab" data-toggle="list" aria-pressed="true">Created Teams</a>
+    <a href="#joined-teams" class="btn btn-info btn-lg" role="tab" data-toggle="list" aria-pressed="true">Joined Teams</a>
+</div>
+<hr />
+
+<div class="tab-content">
+    <div class="tab-pane active" id="created-teams" role="tabpanel">
+        @await Html.PartialAsync("~/Views/Shared/_UserTeamsListingPartial.cshtml", Model.CreatedTeams)
+    </div>
+
+
+    <div class="tab-pane" id="joined-teams" role="tabpanel">
+
+        @await Html.PartialAsync("~/Views/Shared/_UserTeamsListingPartial.cshtml", Model.JoinedTeams)
+    </div>
+
+
+</div>

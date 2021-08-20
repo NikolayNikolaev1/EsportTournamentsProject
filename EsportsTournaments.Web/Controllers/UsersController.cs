@@ -29,10 +29,13 @@
                 return NotFound();
             }
 
+            var userId = user.Id;
+
             return this.View(new UserProfileViewModel
             {
-                UserInfo = await this.users.ProfileAsync(user.Id),
-                //CaptainTeams = await this.users.GetAllCreatedTeamsAsync(user.Id)
+                UserInfo = await this.users.ProfileAsync(userId),
+                CreatedTeams = await this.users.GetAllCreatedTeamsListAsync(userId),
+                JoinedTeams =  await this.users.GetAllJoinedTeamsListAsync(userId)
             });
         }
     }

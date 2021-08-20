@@ -22,11 +22,5 @@
         [Display(Name = "Team Logo")]
         [Required]
         public IFormFile Image { get; set; }
-
-        [Display(Name = "Game")]
-        [Required]
-        public int GameId { get; set; }
-
-        public IEnumerable<SelectListItem> Games { get; set; }
     }
 }

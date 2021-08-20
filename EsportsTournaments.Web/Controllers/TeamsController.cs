@@ -33,11 +33,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> Create()
-            => View(new CreateTeamViewModel
-            {
-                Games = await this.games.AllToSelectListAsync()
-            });
+        public IActionResult Create() => View();
 
         [Authorize]
         [HttpPost]
@@ -50,7 +46,6 @@
             {
                 ModelState.AddModelError("Name",
                     string.Format(ErrorMessages.TeamNameExists, formModel.Name));
-                formModel.Games = await this.games.AllToSelectListAsync();
                 return View(formModel);
             }
 
@@ -58,7 +53,6 @@
             {
                 ModelState.AddModelError("Tag",
                     string.Format(ErrorMessages.TeamTagExists, formModel.Tag));
-                formModel.Games = await this.games.AllToSelectListAsync();
                 return View(formModel);
             }
 

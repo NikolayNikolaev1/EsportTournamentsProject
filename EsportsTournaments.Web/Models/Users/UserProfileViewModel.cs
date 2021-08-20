@@ -8,8 +8,8 @@
     {
         public UserProfileServiceModel UserInfo { get; set; }
 
-        public IEnumerable<TeamListingServiceModel> CaptainTeams { get; set; }
+        public IEnumerable<TeamListingServiceModel> CreatedTeams { get; set; }
 
-        public IEnumerable<TeamListingServiceModel> MemberTeams { get; set; }
+        public IEnumerable<TeamListingServiceModel> JoinedTeams { get; set; }
     }
 }
