@@ -30,7 +30,8 @@
         public async Task<IActionResult> Details(int id)
             => this.ViewOrNotFound(new TournamentsDetailsViewModel
             {
-                Tournament = await this.tournaments.DetailsAsync(id)
+                Tournament = await this.tournaments.DetailsAsync(id),
+                Teams = await this.tournaments.GetTeamsAsync(id)
             });
 
         public async Task<IActionResult> Index(int page = 1)

@@ -7,7 +7,7 @@
     @foreach (var tournament in Model.Tournaments)
     {
         <li class="list-group-item">
-            <img src="@tournament.GameImage" style="width:250px;height:160px;" />
+            <img src="~/images/@tournament.Image" style="width:250px;height:160px;" />
             <h2><a asp-action="Details" asp-route-id="@tournament.Id">@tournament.Name</a></h2>
             <br />
             <small>Game - @tournament.Game | Prize - @tournament.Prize | Starts - @tournament.StartDate.ToShortDateString()</small>

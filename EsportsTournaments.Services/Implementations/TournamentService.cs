@@ -4,6 +4,7 @@
     using AutoMapper.QueryableExtensions;
     using Data;
     using Data.Models;
+    using EsportsTournaments.Services.Models.Teams;
     using Microsoft.EntityFrameworkCore;
     using Models.Tournaments;
     using System.Collections.Generic;
@@ -119,5 +120,12 @@
                     TeamIsInTournament = t.Teams.Any(team => team.TeamId == teamId)
                 })
                 .FirstOrDefaultAsync();
+
+        public async Task<IEnumerable<TeamListingServiceModel>> GetTeamsAsync(int id)
+            => await this.db
+            .Teams
+            .Where(t => t.Tournaments.Any(tr => tr.TournamentId == id))
+            .ProjectTo<TeamListingServiceModel>(this.mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }

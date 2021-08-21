@@ -1,5 +1,5 @@
 ﻿@model ICollection<TeamListingServiceModel>
-@* 
+@*
     Partial for tab listing user Created or Joined Teams.
 *@
 <div class="row">
@@ -7,7 +7,10 @@
         <div class="list-group" id="list-tab" role="tablist">
             @foreach (var team in Model)
             {
-                <a class="list-group-item list-group-item-action @(Model.FirstOrDefault() == team ? "active" : string.Empty)" id="list-team-@team.Id-list" data-toggle="list" href="@($"#list-team-{team.Id}")" role="tab" aria-controls="home">@team.Name</a>
+            <a class="list-group-item list-group-item-action @(Model.FirstOrDefault() == team ? "active" : string.Empty)" id="list-team-@team.Id-list" data-toggle="list" href="@($"#list-team-{team.Id}")" role="tab" aria-controls="home">
+                <img src="~/images/@team.Image" class="rounded-circle" height="40" width="40" />
+                @team.Name
+            </a>
             }
 
         </div>

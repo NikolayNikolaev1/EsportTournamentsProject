@@ -17,14 +17,37 @@
 <hr />
 
 <div class="tab-content">
-    <div class="tab-pane active" id="created-teams" role="tabpanel">
-        @await Html.PartialAsync("~/Views/Shared/_UserTeamsListingPartial.cshtml", Model.CreatedTeams)
+    <div class="tab-pane fade show active" id="created-teams" role="tabpanel">
+        @if (Model.CreatedTeams.Any())
+        {
+
+            @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", Model.CreatedTeams)
+        }
+        else
+        {
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>@Model.UserInfo.Username is not a captain of a team.</h3>
+                </div>
+            </div>
+        }
+
     </div>
 
-
-    <div class="tab-pane" id="joined-teams" role="tabpanel">
-
-        @await Html.PartialAsync("~/Views/Shared/_UserTeamsListingPartial.cshtml", Model.JoinedTeams)
+    <div class="tab-pane fade" id="joined-teams" role="tabpanel">
+        @if (Model.JoinedTeams.Any())
+        {
+            @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", Model.JoinedTeams)
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12">
+                    <h3>User @Model.UserInfo.Username is not a member of a team.</h3>
+                </div>
+            </div>
+        }
     </div>
 
 

@@ -22,7 +22,7 @@
         public static class Roles
         {
             public const string Administrator = "Administrator";
-            public const string TournamentModerator = "Tournament Moderator";
+            public const string TournamentModerator = "TournamentModerator";
         }
 
         public static class ErrorMessages

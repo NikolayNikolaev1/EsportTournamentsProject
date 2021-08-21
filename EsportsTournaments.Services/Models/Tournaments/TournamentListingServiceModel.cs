@@ -17,12 +17,12 @@
 
         public string Game { get; set; }
 
-        public string GameImage { get; set; }
+        public string Image { get; set; }
 
         public void ConfigureMapping(Profile mapper)
             => mapper
                     .CreateMap<Tournament, TournamentListingServiceModel>()
-                    .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name));
-                    //.ForMember(t => t.GameImage, cfg => cfg.MapFrom(t => t.Game.GameImageUrl));
+                    .ForMember(t => t.Game, cfg => cfg.MapFrom(t => t.Game.Name))
+                    .ForMember(t => t.Image, cfg => cfg.MapFrom(t => t.Game.Image));
     }
 }

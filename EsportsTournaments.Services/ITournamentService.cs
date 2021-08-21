@@ -1,5 +1,6 @@
 ﻿namespace EsportsTournaments.Services
 {
+    using Models.Teams;
     using Models.Tournaments;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -11,6 +12,8 @@
         Task<bool> ContainsAsync(int id);
 
         Task<TournamentDetailsServiceModel> DetailsAsync(int id);
+
+        Task<IEnumerable<TeamListingServiceModel>> GetTeamsAsync(int id);
 
         bool HasEnded(int id);
 

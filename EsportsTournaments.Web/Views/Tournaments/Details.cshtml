@@ -5,28 +5,24 @@
 }
 
 <h2 class="text-center">@ViewData["Title"]</h2>
-<img src="@Model.Tournament.GameImage" style="width:1150px;height:360px;" />
 
-<table class="table table-bordered table-hover">
+<div role="tabpanel">
+    @if (Model.Teams.Any())
+    {
+        <h2>Participating teams: </h2>
+        @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", Model.Teams)
+    }
+    else
+    {
 
-    <thead>
-        <tr>
-            <th>
-                <h1>Teams Registered For Tournament</h1>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var team in Model.Tournament.Teams)
-        {
-            <tr>
-                <td>
-                    <h2>@team</h2>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <div class="row">
+            <div class="col-12">
+                <h3>There are no registered teams for this tournament.</h3>
+            </div>
+        </div>
+    }
+
+</div>
 
 <div class="row">
     <div class="col-md-4">
