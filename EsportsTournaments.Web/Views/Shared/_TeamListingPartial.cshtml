@@ -1,33 +1,62 @@
 ﻿@model ICollection<TeamListingServiceModel>
 @*
     Partial for tab listing user Created or Joined Teams.
+    Bootstrap Documentation: https://getbootstrap.com/docs/4.0/components/list-group/#javascript-behavior
+    Bootstrap Documentation for card navigation: https://getbootstrap.com/docs/4.0/components/list-group/#javascript-behavior
 *@
 <div class="row">
     <div class="col-4">
         <div class="list-group" id="list-tab" role="tablist">
             @foreach (var team in Model)
             {
-            <a class="list-group-item list-group-item-action @(Model.FirstOrDefault() == team ? "active" : string.Empty)" id="list-team-@team.Id-list" data-toggle="list" href="@($"#list-team-{team.Id}")" role="tab" aria-controls="home">
-                <img src="~/images/@team.Image" class="rounded-circle" height="40" width="40" />
-                @team.Name
-            </a>
+                <a class="list-group-item list-group-item-action @(Model.FirstOrDefault() == team ? "active" : string.Empty)" id="list-team-@team.Id-list" data-toggle="list" href="@($"#list-team-{team.Id}")" role="tab" aria-controls="home">
+                    <img src="~/images/@team.Image" class="rounded-circle" height="40" width="40" />
+                    @team.Name
+                </a>
             }
 
         </div>
     </div>
-    <div class="col-8 table-bordered border-primary">
+    <div class="col-8 border-primary">
         <div class="tab-content" id="nav-tabContent">
 
             @foreach (var team in Model)
             {
-                <div class="tab-pane fade @(Model.FirstOrDefault() == team ? "show active" : string.Empty)" id="list-team-@team.Id" role="tabpanel" aria-labelledby="list-team-@team.Id-list">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img src="~/images/@team.Image" class="rounded-circle" height="150" width="150" alt="@team.Name" />
+                <div class="tab-pane fade @(Model.FirstOrDefault() == team ? "show active" : string.Empty) card text-center" id="list-team-@team.Id" role="tabpanel" aria-labelledby="list-team-@team.Id-list">
+                    <div class="card-header" role="tablist">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#team-info" data-toggle="list" role="tab">Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#team-players" data-toggle="list" role="tab">Players</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#team-tournaments" data-toggle="list" role="tab">Tournaments</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="card-body fade tab-pane show active" id="team-info" role="tabpanel">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
 
-                        <div class="col-md-8 pt-5">
-                            <h3>@team.Name</h3>
+                        <div class="card-body fade tab-pane" id="team-players" role="tabpanel">
+                            <h1>PLAYERS</h1>
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+
+
+                        <div class="card-body fade tab-pane" id="team-tournaments" role="tabpanel">
+                            <h1>TOURNAMENTS</h1>
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
                 </div>
