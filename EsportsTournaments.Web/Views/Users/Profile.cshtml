@@ -20,8 +20,11 @@
     <div class="tab-pane fade show active" id="created-teams" role="tabpanel">
         @if (Model.CreatedTeams.Any())
         {
-
-            @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", Model.CreatedTeams)
+            @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", new TeamListingViewModel
+            {
+                Teams = Model.CreatedTeams,
+                TotalTeams = Model.CreatedTeams.Count()
+            })
         }
         else
         {
@@ -38,7 +41,11 @@
     <div class="tab-pane fade" id="joined-teams" role="tabpanel">
         @if (Model.JoinedTeams.Any())
         {
-            @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", Model.JoinedTeams)
+            @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", new TeamListingViewModel
+            {
+                Teams = Model.JoinedTeams,
+                TotalTeams = Model.CreatedTeams.Count()
+            })
         }
         else
         {

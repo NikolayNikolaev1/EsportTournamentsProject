@@ -8,7 +8,7 @@
         public const int GameNameMinLength = 2;
         public const int ImageFileNameMaxLength = 256;
         public const int ImageFileNameMinLength = 4;
-        public const int TeamNameMaxLength = 30; // Change to 15
+        public const int TeamNameMaxLength = 15;
         public const int TeamNameMinLength = 5;
         public const int TeamTagMaxLength = 6;
         public const int TeamTagMinLength = 2;
@@ -18,5 +18,6 @@
         public const int TournamentNameMinLength = 10;
         public const int UrlMinLength = 12;
         public const int UrlMaxLength = 2000;
+        public const string UserDefaultImageName = "Default_User_Image.png";
     }
 }

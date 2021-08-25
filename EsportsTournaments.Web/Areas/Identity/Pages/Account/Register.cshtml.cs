@@ -14,6 +14,8 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    using static Common.DataConstants;
+
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
@@ -73,7 +75,11 @@
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = Input.UserName, Email = Input.Email };
+                var user = new User 
+                { 
+                    UserName = Input.UserName,
+                    Email = Input.Email,
+                    ProfilePicture = UserDefaultImageName};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

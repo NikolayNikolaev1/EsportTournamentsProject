@@ -8,6 +8,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using System.Threading.Tasks;
 
+    using static Common.DataConstants;
     using static Common.WebConstants;
 
     public static class ApplicationBuilderExtensions
@@ -71,7 +72,8 @@
                 adminUser = new User
                 {
                     Email = AdminCredentials.Email,
-                    UserName = AdminCredentials.Username
+                    UserName = AdminCredentials.Username,
+                    ProfilePicture = UserDefaultImageName
                 };
 
                 await userManager.CreateAsync(adminUser, AdminCredentials.Password);

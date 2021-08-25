@@ -1,4 +1,4 @@
-﻿@model ICollection<TeamListingServiceModel>
+﻿@model TeamListingViewModel
 @*
     Partial for tab listing user Created or Joined Teams.
     Bootstrap Documentation: https://getbootstrap.com/docs/4.0/components/list-group/#javascript-behavior
@@ -7,9 +7,9 @@
 <div class="row">
     <div class="col-4">
         <div class="list-group" id="list-tab" role="tablist">
-            @foreach (var team in Model)
+            @foreach (var team in Model.Teams)
             {
-                <a class="list-group-item list-group-item-action @(Model.FirstOrDefault() == team ? "active" : string.Empty)" id="list-team-@team.Id-list" data-toggle="list" href="@($"#list-team-{team.Id}")" role="tab" aria-controls="home">
+                <a class="list-group-item list-group-item-action @(Model.Teams.FirstOrDefault() == team ? "active" : string.Empty)" id="list-team-@team.Id-list" data-toggle="list" href="@($"#list-team-{team.Id}")" role="tab" aria-controls="home">
                     <img src="~/images/@team.Image" class="rounded-circle" height="40" width="40" />
                     @team.Name
                 </a>
@@ -20,39 +20,75 @@
     <div class="col-8 border-primary">
         <div class="tab-content" id="nav-tabContent">
 
-            @foreach (var team in Model)
+            @foreach (var team in Model.Teams)
             {
-                <div class="tab-pane fade @(Model.FirstOrDefault() == team ? "show active" : string.Empty) card text-center" id="list-team-@team.Id" role="tabpanel" aria-labelledby="list-team-@team.Id-list">
+                <div class="tab-pane fade @(Model.Teams.FirstOrDefault() == team ? "show active" : string.Empty) card text-center" id="list-team-@team.Id" role="tabpanel" aria-labelledby="list-team-@team.Id-list">
                     <div class="card-header" role="tablist">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#team-info" data-toggle="list" role="tab">Info</a>
+                                <a class="nav-link active" href="#team-@team.Id-info" data-toggle="list" role="tab">Info</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#team-players" data-toggle="list" role="tab">Players</a>
+                                <a class="nav-link" href="#team-@team.Id-players" data-toggle="list" role="tab">Players</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#team-tournaments" data-toggle="list" role="tab">Tournaments</a>
+                                <a class="nav-link" href="#team-@team.Id-tournaments" data-toggle="list" role="tab">Tournaments</a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="tab-content">
-                        <div class="card-body fade tab-pane show active" id="team-info" role="tabpanel">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                        @* Team Info Tab *@
+                        <div class="card-body fade tab-pane show active" id="team-@team.Id-info" role="tabpanel">
+                            <div class="row">
+
+                                <div class="col-md-5">
+                                    <img src="~/images/@team.Image" alt="@team.Name" width="250" height="250"/>
+                                </div>
+                                <div class="col-md-5">
+                                    <h4 class="card-title">Name: @team.Name</h4>
+                                    <h5>Tag: @team.Tag</h5>
+                                    <h5>Total Players: @team.Players.Count()</h5>
+                                    <h5>Tournaments Won: @team.TournamentsWon</h5>
+                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                    <a class="btn btn-primary" 
+                                       asp-area=""
+                                       asp-controller="Teams"
+                                       asp-action="Join"
+                                       asp-route-id="@team.Id">Join Team</a>
+                                </div>
+                            </div>
+                        </div>
+                        @* Team Players Tab *@
+                        <div class="card-body fade tab-pane" id="team-@team.Id-players" role="tabpanel">
+                            <h4 class="card-title">Captain</h4>
+                            <button type="button" class="list-group-item list-group-item-action">
+                                <img src="~/images/@team.Captain.ProfilePicture" class="rounded-circle" height="40" width="40" />
+                                <p class="card-text">@team.Captain.Username</p>
+                            </button>
+
+                            <h5 class="card-title">Players</h5>
+                            <div class="list-group">
+                                <div class="row">
+                                    @foreach (var player in team.Players)
+                                    {
+                                        <div class="col-4">
+
+                                            <button type="button" class="list-group-item list-group-item-action item">
+                                                <img src="~/images/@player.ProfilePicture" class="rounded-circle" height="40" width="40" />
+                                                <p class="card-text">@player.Username</p>
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+
+                            </div>
+
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
 
-                        <div class="card-body fade tab-pane" id="team-players" role="tabpanel">
-                            <h1>PLAYERS</h1>
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-
-
-                        <div class="card-body fade tab-pane" id="team-tournaments" role="tabpanel">
+                        @* Team Tournaments Tab *@
+                        <div class="card-body fade tab-pane" id="team-@team.Id-tournaments" role="tabpanel">
                             <h1>TOURNAMENTS</h1>
                             <h5 class="card-title">Special title treatment</h5>
                             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>

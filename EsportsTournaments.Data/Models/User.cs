@@ -5,6 +5,8 @@
 
     public class User : IdentityUser
     {
+        public string ProfilePicture { get; set; }
+
         public IEnumerable<Team> TeamsLeading { get; set; }
 
         public IEnumerable<PlayerTeam> Teams { get; set; } = new List<PlayerTeam>();

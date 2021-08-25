@@ -10,7 +10,11 @@
     @if (Model.Teams.Any())
     {
         <h2>Participating teams: </h2>
-        @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", Model.Teams)
+        @await Html.PartialAsync("~/Views/Shared/_TeamListingPartial.cshtml", new TeamListingViewModel
+        {
+            Teams = Model.Teams,
+            TotalTeams = Model.Teams.Count()
+        })
     }
     else
     {
